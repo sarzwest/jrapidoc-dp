@@ -2,8 +2,8 @@ DVIPS = dvips
 LATEX = latex
 PDFLATEX = pdflatex
 BIBTEX = bibtex
-PROJECT = Hron-thesis-2008
-#PROJECT = document
+#PROJECT = Hron-thesis-2008
+PROJECT = document
 EDITOR = emacs # nebo jiny oblibeny editor
 GV = gv # nebo ghostview
 
