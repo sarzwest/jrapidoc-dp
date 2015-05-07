@@ -53,6 +53,8 @@
 \usepackage{enumerate}
 \usepackage{listings}
 
+\usepackage{eurosym}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Zvolte jednu z moznosti 
 % Choose one of the following options
@@ -249,6 +251,7 @@ nákladů potřebných pro tvorbu dokumentace a tím i realizaci systémové int
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Obsah / Table of Contents 
 
 \tableofcontents
+\addtocontents{toc}{\setcounter{tocdepth}{2}} 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Seznam obrazku / List of Figures 
@@ -259,6 +262,8 @@ nákladů potřebných pro tvorbu dokumentace a tím i realizaci systémové int
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Seznam tabulek / List of Tables
 
 \listoftables
+
+\lstlistoflistings 
 
 
 %**************************************************************
@@ -287,7 +292,7 @@ nákladů potřebných pro tvorbu dokumentace a tím i realizaci systémové int
 
 %*****************************************************************************
 % \include{1_Uvod}
-\chapter{Úvod}
+\chapter{Úvod} 
 % \section*{}
 Systémová integrace je velmi často skloňovaný pojem. Drtivá většina systémů v dnešní době
 není bez integrace schopna fungovat. Schopnost integrace s jinými systémy je žádoucí,
@@ -680,7 +685,7 @@ mód.
 Pro definici serializace Java typů do SOAP zprávy je použita anotace @SOAPBinding, kterou
 je možno použít u třídy nebo metody. Anotace @SOAPBinding má tři elementy:
 
-\begin{table}
+\begin{table}[h]
 \begin{center}
 \begin{tabular}{|c|l|l|}
 \hline
@@ -824,6 +829,7 @@ víceznačnosti. Non-root resource třída je instanciovaná aplikačním kódem
 popisovaný public konstruktor.
 
 \subsubsection{Atributy}
+\label{ch:atributy}
 
 Při vytváření instance resource třídy lze naplnit její atributy konstruktorem nebo setter
 metodami. Pokud má atribut modifikátor public, lze přidat anotace přímo k atributu. Anotace
@@ -854,6 +860,7 @@ Anotace přijímá hodnotu jako String a ten je poté převáděn do požadovan�
 kroků 1 – 5 výše.
 
 \subsubsection{Resource metoda}
+\label{subsec:resource-metoda}
 
 Resource metoda je metoda obsluhující požadavek, který přišel na resource třídu. Tato metoda
 musí mít anotaci request method designatoru. Taková anotace má anotaci @HttpMethod a
@@ -951,6 +958,7 @@ jaký formát chce posílající přijmout. V JAX-RS těmto hlavičkám odpovíd
 Content-Type.
 
 \subsubsection{Dědičnost resource tříd}
+\label{subsec:dedicnost-resource-trid}
 
 JAX-RS anotace mohou být užity nejen přímo v resource třídě, ale mohou také v nad třídách a
 interfacech, jež implementují. Proto je nutné specifikovat pořadí, v jakém budou mít anotace
@@ -961,7 +969,7 @@ tříd dědičnosti seřazeném od nejobecnější třídy po nejkonkrétnějš�
 ta, která je konkrétnější. Jelikož jedna třída může mít maximálně jednoho přímého předka,
 nemůže zde nastat kolize. Pokud by každá třída implementovala pouze jeden interface, kolize
 by také nemohla nastat a přednost by měly anotace z interfacu, který je nejblíže třídě. Pokud
-na jedné úrovni je více interfaců, tak přednost interfaců není specifikováno a každý
+na jedné úrovni je více interfaců, tak přednost interfaců není specifikována a každý
 implementátor JAX-RS si může zvolit vlastní pořadí.
 
 \subsubsection{Entity provideři}
@@ -1046,7 +1054,7 @@ definuje také life-cycle buildu, který se skládá z po sobě jdoucích fází
 dostane k projektu používající Maven, nejenže se hned orientuje v adresářové struktuře, ale
 pro spuštění celého buildu stačí zadat příkaz mvn install.
 
-\begin{lstlisting}[frame=single]
+\begin{lstlisting}[frame=single, caption={A listing}] 
 pom.xml
 src/
   main/
@@ -1270,14 +1278,22 @@ Po splnění těchno prerekvizit je možné tvořit mojo třídy.
           <editable>true</editable>
           <description></description>
         </parameter>
-    ...další parametry
+    ...dalsi parametry
       </parameters>
       <configuration>
-        <basedir implementation="java.io.File" default-value="${project.basedir}"/>
-        <project implementation="org.apache.maven.project.MavenProject" default-value="${project}"/>
-        <session implementation="org.apache.maven.execution.MavenSession" default-value="${session}"/>
-        <settings implementation="org.apache.maven.settings.Settings" default-value="${settings}"/>
-        <target implementation="java.io.File" default-value="${project.build.directory}"/>
+        <basedir implementation="java.io.File" 
+        default-value="${project.basedir}"/>
+        <project 
+        implementation="org.apache.maven.project.MavenProject" 
+        default-value="${project}"/>
+        <session 
+        implementation="org.apache.maven.execution.MavenSession" 
+        default-value="${session}"/>
+        <settings 
+        implementation="org.apache.maven.settings.Settings" 
+        default-value="${settings}"/>
+        <target implementation="java.io.File" 
+        default-value="${project.build.directory}"/>
       </configuration>
     </mojo>
   </mojos>
@@ -1297,7 +1313,7 @@ vysvětleny. Element name udává jméno goalu, který bude reprezentován mojo 
 Element defaultPhase specifikuje defaultní fázi, ke které bude goal napojen, pokud nebude
 explicitně definováno v konfiguraci jinak. Element requiresDependencyResolution definuje
 jaké závislosti bude plugin mít na classpath při spuštění. Možné volby jsou: NONE,
-COMPILE, COMPILE_PLUS_RUNTIME, RUNTIME, RUNTIME_PLUS_SYSTEM a
+COMPILE, COMPILE\_PLUS\_RUNTIME, RUNTIME, RUNTIME\_PLUS\_SYSTEM a
 TEST.
 
 \paragraph{Parametry v Mojo}
@@ -1394,6 +1410,7 @@ entity body parametru.
     \item Nepodporuje více anotací pro typ http metody (@GET, @POST, ...) u
 jedné Java metody.
 \end{itemize}
+\end{itemize}
 
 \subsection{MireDot}
 
@@ -1403,7 +1420,8 @@ MireDot má dva druhy licencování. Pro používání free verze je nutné zare
 projekt, který bude využívat MireDot. V konfiguraci maven projektu je zapotřebí 
 vložit licenční kód, který se vztahuje ke konkrétnímu modulu s groupId a artifactId. 
 Free verzi lze uplatnit jen na projekty spadající do kategorie open-source projektů, 
-které nejsou výdělečné. Komerční verze stojí na 1 rok €200 pro jeden projekt. 
+které nejsou výdělečné. Komerční verze stojí na 1 rok 200\euro pro jeden
+projekt.
 Placená verze má navíc například customizovatelný HTML výstup, export do formátu 
 docx nebo next business day support. Nástroj generuje výstup i bez nutnosti 
 konfigurace, dokáže upozornit na potencionální problémy s navrženým API. Například 
@@ -1474,7 +1492,7 @@ dokumentace podrobnější.
 
 \begin{itemize}
   \item Podpora REST i Web Services.
-  \item Generuje klienty v jiných jazycích (C#, C/C++, Objective C).
+  \item Generuje klienty v jiných jazycích (C\#, C/C++, Objective C).
   \item Pod open-source licencí Apache License Version 2.0.
   \item Integrovaný do Apache Maven.
 \end{itemize}
@@ -2010,67 +2028,685 @@ základě analýzy v 2.4.3. Pro REST i WS služby bude existovat pouze jeden. Zd
 instance reprezentace API k REST či WS bude záležet na řídící komponentě tvorby modelu,
 která jej bude vytvářet.
 
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=13cm]{images-pdf/Universal-Model.pdf}
+\caption{Model reprezentující vzdálené rozhraní}
+\label{fig:logo}
+\end{center}
+\end{figure}
 
+Popis tříd reprezentujících model:
 
-%*****************************************************************************
-\chapter{Popis problému, specifikace cíle}
+APIModel
 
-\begin{itemize}
-\item Popis řešeného problému, vymezení cílů DP/BP a požadavků na implementovaný systém.
-\item Popis struktury DP/BP ve vztahu k vytyčeným cílům.
-\item Rešeršní zpracování existujících implementací, pokud jsou známy.
-\end{itemize}
+Hlavní kořenová třída obsahující tři hlavní atributy. První atribut customInfo reprezentuje
+přídavné informace obdržené z konfigurace pluginu. Položky jsou vždy párové textové
+řetězce klíč-hodnota. Následujícím atributem je seznam služeb sdružených ve skupinách
+podle společné URI. Posledním atributem je seznam transportních typů ze všech skupin
+služeb. Typy jsou zde vytvořeny na základě rekurzivního procházení každého typu a jeho
+atributů.
 
-%*****************************************************************************
-\chapter{Analýza a návrh řešení}
-Analýza a návrh implementace (včetně diskuse různých alternativ a volby implementačního prostředí).
+ServiceGroup
 
+Třída reprezentující skupinu služeb se stejným URI prefixem.
 
-%*****************************************************************************
-\chapter{Realizace}
-Popis implementace/realizace se zaměřením na nestandardní části řešení.
+Service
 
+Třída reprezentující kořenovou resource třídu (JAX-RS) nebo SEI (JAX-WS), která obsahuje
+seznam svých metod.
 
-%*****************************************************************************
+Method
+
+V JAX-RS kontextu třída reprezentuje jak resource metody kořenové resource třídy, tak i
+rekurzivně obsažené metody resource tříd vrácených sub-resource lokátorem (podrobnosti v
+2.2.2.4). Pro JAX-WS třída reprezentuje webovou operaci a obsahuje seznam vstupních
+parametrů (JAX-RS může mít vždy jen jeden parametr). Při užití v JAX-WS má metoda
+seznam vstupních SOAP hlaviček a seznam možností odpovědí. Seznam může být prázdný,
+pokud je metoda JAX-WS jednosměrná.
+
+SoapBinding
+
+Třída nesoucí informace o způsobu serializování zpráv v kontextu JAX-WS.
+
+Return
+
+Třída nereprezentuje návratový typ metody jak evokuje její název, ale jednu možnou
+odpověď, jakou může metoda vrátit. Odpověď se skládá z http statusu, návratových typů,
+návratových typů SOAP hlaviček, seznamu http hlaviček a seznamu http cookie.
+
+TransportType
+
+Třída reprezentující transportní typ. Jejími atributy jsou popis transportního typu a datový typ
+vytvořený type providerem (podrobněji v 2.4.3.3).
+
+Návrh datových typů pro model znázorňuje diagram tříd 8. Návrh obsahuje tři možné typy:
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=13cm]{images-pdf/Type-System.pdf}
+\caption{Reprezentace datových typů pro transport}
+\label{fig:logo}
+\end{center}
+\end{figure}
+
+CollectionTypeModel
+
+Datový typ vycházející z Javovských kolekcí a polí. Obsahuje atribut nesoucí odkaz na typ,
+jež je možné do kolekce či pole vložit. Může odkazovat na jakýkoliv typ, který je potomkem
+třídy TypeModel.
+
+MapTypeModel
+
+Třída reprezentující Javovský datový typ Map<K, V>. Její atributy odkazují na datové typy,
+jež reprezentují klíče a hodnoty, které mohou být do mapy vloženy. Mohou odkazovat na
+jakýkoliv typ, který je potomkem třídy TypeModel.
+
+CustomTypeModel
+
+Třída reprezentuje datový typ běžných typů v Javě. Zahrnuje jak primitivní datové, tak i
+objektové typy. Bude obsahovat všechny ostatní Javovské typy, které nepatří do skupin výše
+zmíněných.
+
+\section{Návrhové vzory}
+
+Tato kapitola obsahuje popsané návrhové vzory jenž jsou použity v nástroji.
+
+Factory method
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=13cm]{images-pdf/Factory-Method-Design-Patternnew.pdf}
+\caption{Factory method pattern}
+\label{fig:logo}
+\end{center}
+\end{figure}
+
+Návrhový vzor patří do skupiny creational, která se zabývá principy pro 
+vytváření objektů. Popisuje, jak vytvořit objekt bez použití konkrétní třídy. 
+Tovární metodě jsou předány parametry, na základě kterých je rozhodnuto, ze 
+které třídy bude vyrobena a vrácena instance. Je zde využito polymorfizmu, 
+protože tovární metoda vrací instance tříd mající stejný nadtyp. Vzor tovární 
+metoda je v nástroji použit v komponentách Model Handler a Type Provider 
+popsaných v 3.1.1.
+
+Builder
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=13cm]{images-pdf/Builder-Design-Pattern.pdf}
+\caption{Builder pattern}
+\label{fig:logo}
+\end{center}
+\end{figure}
+
+Návrhový vzor patřící také do skupiny creational vzorů a zabývající se 
+principy vytváření objektů. Používá se pro konstrukci složitých objektů, 
+kde se složité vytváření oddělí od reprezentace dat. Hlavní části v builder 
+vzoru je vytvářený objekt, builder objekt obsahující funkcionalitu pro 
+tvorbu vytvářeného objektu a director objekt, který řídí objekt builder 
+a tím i celý proces tvorby objektu. Jakmile director ukončí vytváření objektu, 
+zavolá na builder objektu metodu build, která vrátí vytvořený objekt. Vzor 
+builder je použit pro tvorbu modelu a rekurzivně pro všechny jeho části. 
+Model se nachází v komponentě Model Builder popsané v 3.1.1.
+
+Adapter
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=13cm]{images-pdf/Adapter-Design-Pattern.pdf}
+\caption{Adapter pattern}
+\label{fig:logo}
+\end{center}
+\end{figure}
+
+Návrhový vzor adapter patří do skupiny structural návrhových vzorů, jež se 
+zabývají návrhem spojení mezi objekty. Používá se v případech, kdy existují 
+dvě komponenty, ovšem nedokážou spolu komunikovat, protože vystavené rozhraní 
+jedné komponenty je trochu jiné než požadované rozhraní druhé komponenty. Hrají 
+zde roli objekty adaptovaný objekt, klient a adapter. V případech, kdy klient 
+požaduje jiné rozhraní, než vystavuje adaptovaný, vloží se mezi klienta a 
+adaptovaného objekt adapter. Ten bude zodpovědný za vystavení takového rozhraní 
+klientovi a konzumování rozhraní adaptovaného, aby mohly komponenty mezi sebou 
+komunikovat.
+
+\chapter{Implementace}
+
+\section{Použité technologie}
+
+Java 6.0
+
+Vyvíjený nástroj byl vyvíjen a kompilován do Java verze 6.0.
+
+JAX-WS 2.0
+
+Nástroj při vytváření modelu analyzuje kód JAX-WS specifikace ve verzi 2.0.
+
+JAX-RS 2.0
+
+Nástroj při vytváření modelu analyzuje kód JAX-RS specifikace ve verzi 2.0.
+
+Apache Maven 3.3.1
+
+Maven pluginy v nástroji byly vyvíjeny na verzích knihoven 3.3.1.
+
+Reflections 0.9.9-RC2
+
+Pro analýzu bytecode a vyhledání anotovaných tříd bylo použito Reflections ve verzi 0.9.9-
+RC2.
+
+Java Reflection API
+
+Při analýze kódu bylo využito rozhraní Java Reflection API, jehož verze je vázaná k verzi
+Javy.
+
+Jackson 2.5.0
+
+Knihovna ve verzi 2.5.0 použitá pro tvorbu transportních typů.
+
+JUnit 4.11
+
+Nástroj byl testován jednotkovými testy s použitím frameworku JUnit ve verzi 4.11.
+
+Json2html
+
+JavaScriptová knihovna zodpovědná za transformaci modelu v JSON formátu do HTML.
+Transformace je prováděna na základě vytvoření šablony a její aplikace na JSON objekt.
+
+\section{Vyhledávání JAX-WS a JAX-RS API}
+
+Vyhledávání JAX-WS a JAX-RS spočívá ve vyhledání tříd majících anotace @Path a
+@WebService, které jsou na classpath projektu. Zde jsou dvě možnosti jak třídy vyhledat.
+První přístup je získání seznamu všech tříd na classpath a jejich postupné nahrávání do paměti
+instancí třídy ClassLoader. Po nahrání třídy do paměti následně dotazování pomocí Java
+Reflection API, zda třída obsahuje požadovanou anotaci. Tento přístup však není nejlepší
+volbou především z hlediska časové náročnosti. V nejhorším případě budou muset být
+nahrány všechny třídy, což může u většího projektu trvat desítky sekund. Nástroj používá
+druhou metodu získání tříd, která je rychlejší. Třídy nejsou nahrávány do paměti, ale napřed
+proběhne analýza bytecode a vyberou se pouze ty, které se do paměti nahrají. Poté jejich
+nahrání je možné nad nimi používat Java Reflection API. Nástroj pro tento přístup používá
+knihovnu Reflections, která je nástupcem knihovny Scannotation. Knihovně je třeba předat
+instanci ClassLoaderu patřící k projektu a ne instanci, která patří k pluginu.
+
+\section{Zpracování JAX-RS a JAX-WS API}
+
+Ke zpracování vzdáleného rozhraní je použito Java Reflection API, pomocí kterého probíhá
+analýza vytvořeného rozhraní. Rozhraní mohou obsahovat oproti klasickým třídám anotace a
+datové typy z JAX-RS API, JAX-WS API a JRAPIDOC-API. Java Reflection API je
+vlastností jazyka Java, která dokáže vykonávat nebo analyzovat sama sebe.
+
+\section{Přídavné anotace}
+
+Při použití specifikací pro tvorbu vzdáleného rozhraní nelze introspekcí kódu zjistit všechny
+potřebné informace, které jsou definovány v požadavcích v kapitole 2.4. Jsou pro to
+vytvořeny přídavné anotace, které mají za cíl pomoci tvořit detailnější dokumentaci. Anotace
+jsou v samostatném balíku a lze je tedy volitelně připojit do projektu. Připojení probíhá
+standardním přidáním Maven závislosti do projektu. Ani s použitím anotací nemusí být
+dosaženo požadované dokumentace, protože by to mohlo vést k velmi složitému a
+nepřehlednému anotování částí rozhraní. Vznikl proto kompromis, který je přehledný,
+intuitivní a zároveň dokáže pokrýt většinu požadavků na tvorbu dokumentace.
+
+Nově vzniklé anotace:
+
+@org.jrapidoc.annotation.DocDescription
+
+Přidává popis k elementům rozhraní.
+
+@org.jrapidoc.annotation.rest.DocIsRequired
+
+Indikuje zda je parametr či atribut povinný.
+
+@org.jrapidoc.annotation.rest.DocPathExample
+
+Protože v anotaci @Path mohou být regulární výrazy, které nemusejí být dobře čitelné, lze v
+této anotaci uložit ukázku URI vyhovující regulárnímu výrazu.
+
+@org.jrapidoc.annotation.rest.DocReturn
+
+Anotace slouží k tvorbě možnosti odpovědi a je vytvořena především pro situace, kdy je
+návratovým typem Response, ze kterého nelze při statické analýze získat žádné informace.
+
+@org.jrapidoc.annotation.rest.DocReturns
+
+Při více možnostech odpovědí lze možnosti vložit do této anotace.
+
+@org.jrapidoc.annotation.soap.DocReturn
+
+Pomáhá lépe zdokumentovat možnosti odpovědi.
+
+@org.jrapidoc.annotation.soap.DocReturns
+
+Při více možnostech odpovědí lze možnosti vložit do této anotace.
+
+Další podrobnosti o přídavných anotacích lze nalézt v javadoc.
+
+\section{Tvorba transportních typů}
+
+Tvorba transportních typů může být prováděna buď zabudovanými třídami pro jejich tvorbu
+nebo mohou být vytvořeny jiné třídy, které se nakonfigurují jako náhrada za původní
+funkcionalitu. Defaultně se pro část REST používají třídy využívající knihovnu Jackson a pro
+WS knihovna JAXB. V nástroji jsou ještě dvě třídy, které lze používat pro tvorbu
+transportních typů. První z nich je kombinace Jackson a JAXB, Jackson je primární a JAXB
+je sekundární. Druhou možností je také jejich kombinace, ale s obráceným pořadím. Výhodou
+použití těchto zabudovaných tříd v nástroji je, že při tvorbě transportních typů jsou užity
+anotace z těchto knihoven. Výsledný typ tedy bude odpovídat přesně tomu, jak jej bude
+serializovat entity provider.
+
 \chapter{Testování}
 
-\begin{itemize}
- \item Způsob, průběh a výsledky testování.
- \item Srovnání s existujícími řešeními, pokud jsou známy.
-\end{itemize} 
+\section{Testování vývojářem}
+
+Testování probíhalo paralelně s procesem vývoje. Cílem bylo ověřit, zda každá nově přidaná
+část kódu provádí to, co se od ní čeká. Testování probíhalo připojením nástroje k Maven
+projektu obsahujícímu JAX-RS a JAX-WS. Proces testování vývojářem probíhal provedením
+buildu nástroje a následným spuštěním buildu testovaného projektu s módem debug. Maven
+umožňuje mód debug spustit namísto běžného mvn příkazem mvnDebug, který otevře port a
+čeká, dokud se debugger na tento port nepřipojí. Poté probíhá standardní debug Java aplikace.
+
+\section{Jednotkové testy}
+
+Jednotkové testy byly zaintegrovány do buildu nástroje, jejich vykonání a dosažené výsledky
+tedy byly kontrolovány s každou novou tvorbou spustitelných balíčků. Cílem jednotkového
+testování bylo provedení regresních testů. Pro měření kvality nástroje bylo vytvořeno přes sto
+jednotkových testů.
+
+\section{Integrační testy}
+
+Integrační testování bylo realizováno zakomponováním pluginů nástroje do buildu
+existujících projektů. Neslo si za cíl ověření chování pluginů a výsledek jejich výstupu.
+
+Integrační testování bylo provedeno jak na testovacím projektu, tak na rozsáhlých existujících
+projektech používajících pro tvorbu vzdálených rozhraní technologie JAX-RS a JAX-WS.
+
+Prvním z existujících projektů byl projekt http://www.jbpm.org. jBPM je flexibilní balík pro
+správu byznys procesů tvořící most mezi byznys analytiky a vývojáři. Produkt je dostupný
+pod Apache Software License 2.0 a je zaštiťován firmou RedHat.
+
+Druhým existujícím projektem byl Relationship Registry, jež slouží ke správě informací o
+používaných nástrojích na projektech uvnitř společnosti CA Technologies. Vzhledem k tomu,
+že se jedná o interní projekt, bylo integrační testování prováděno interním vývojářem
+společnosti.
+
+\section{Testování použitelnosti}
+
+Cílová skupina
+
+Znalost tvorby REST nebo WS na platformě JEE? Ano
+Zkušenost s projekty spravovaném pomocí Maven? Ano
+Zkušenost s přidáváním Maven pluginů do životního cyklu buildu? Ano
+
+Cíle testování
+
+Intuitivnost
+
+Jedním z cílů testování je zjištění, jak je používání nástroje intuitivní. Uživatelé by neměli být
+vystaveni neintuitivní konfiguraci. Naopak nástroj by měl mít možnost být spuštěn s
+minimální konfigurací. Bude testováno, jak respondent využije pomocných funkcí a jestli mu
+byly nápomocné. Pomocnými funkcemi je help goal v pluginu a javadoc rozhraní nástroje.
+
+Přehlednost
+
+Jelikož je nástroj možné různě rozšířit, bude testováno jestli se respondent bude v možnostech
+rozšíření orientovat a podaří se mu takové rozšíření provést.
+
+Provedení testů
+
+Před provedením testů bude respondent seznámen se základními principy fungování nástroje a
+poté mu budou předány scénáře pro provedení uživatelských akcí a adresář s klientem. Po
+jejich vykonání mu budou vysvětleny rozšířené možnosti nástroje a předány další scénáře pro
+provedení. Od respondenta bude požadováno komentování pozitivních, negativních poznatků
+a komentování prováděných akcí ze scénářů. Celý průběh testování bude zaznamenán v audio
+podobě.
+
+\subsection{Testovací scénáře}
+
+Vygenerování modelu pro JAX-RS
+
+\begin{enumerate}
+  \item Respondent připojí plugin do životního cyklu buildu.
+  
+  \item Respondent spustí goal help.
+  
+  \item Plugin vypíše informace o možnostech konfigurace.
+  
+  \item Respondent provede konfiguraci pluginu.
+  
+  \item Respondent spustí build projektu.
+  
+  \item Plugin vygeneruje do souboru model rozhraní.
+  
+  \item Respondent nalezne a otevře soubor s modelem.
+\end{enumerate}
+
+Načtení modelu v GUI klientovi
+
+\begin{enumerate}
+  \item Respondent nakopíruje do adresáře se zdroji GUI klienta.
+  
+  \item Respondent otevře ve webovém prohlížeči stránku s klientem.
+  
+  \item Načte se stránka.
+  
+  \item Respondent vloží adresu umístění modelu a stiskne „Load model“.
+  
+  \item Klient načte a zobrazí model.
+  
+Alternativní cesta:
+
+  \item Pokud byla respondentem vložena neplatná cesta zobrazí se chybová hláška.
+\end{enumerate}
+
+Přidání popisu kořenové resource třídy
+
+\begin{enumerate}
+  \item Respondent přidá Maven závislost (org.jrapidoc:jrapidoc-annotation:1.0-SNAPSHOT)
+do projektu
+  \item Respondent přidá do kořenové resource třídy anotaci nacházející se v závislosti z
+kroku 1
+
+  \item Respondent spustí build projektu
+  \item INCLUDE: Načtení modelu v GUI klientovi
+
+  \item Respondent si zobrazí v modelu popis kořenové resource třídy
+\end{enumerate}
+
+\subsection{Výsledky}
+
+Převážně v úvodu testování si respondent stěžoval na neexistující wiki stránku projektu.
+Návod konfigurace pluginu se zdál být velmi stručný a pro člověka neznalého principů
+fungování pluginu téměř nic neříkající. To by měla vyřešit wiki stránka, která by obsahovala
+více podrobný popis konfigurace včetně jejích ukázek. Respondent navrhl, aby byl na wiki
+také ukázkový projekt, na kterém by bylo vidět, jaké vlastnosti plugin má a jak se dá použít.
+
+Ve scénářích není uvedeno, k jakému typu modulu se má plugin připojit. Respondent si tak
+nebyl jistý, zda v multimodulovém projektu plugin připojit k modulu obsahující vzdálené
+rozhraní nebo k war modulu, kde je rozhraní přidáno jako závislost. Nakonec se rozhodl
+správně a připojil ho k war modulu.
+
+Po seznámení se s nástrojem a představení jeho možností respondent ocenil funkce, kterými je
+plná podpora atributů v resource třídách a podpora subresource lokátorů. Pozitivně hodnotil
+také podporu WS a možnosti rozšíření nástroje nebo nahrazení komponent za vlastní.
+
+Co se týče GUI klienta, na první pohled působí trochu nepřehledně, obzvlášť když uživatel při
+procházení modelu neskrývá uzly, které již navštívil. Respondent navrhl provádět skrývání
+automaticky za uživatele. Dalším poznatkem bylo umístění tlačítek pro nahrávání modelu a
+pro přepínání mezi REST a WS.
+
+Celkově nástroj zanechal působivý pocit z důvodů propracovanosti modelu a informací v něm
+zanesených. Respondent má zkušenosti s používáním nástroje Swagger (popsán v 2.3.1) a po
+seznámení se s novým nástrojem je ochotný přejít na používání nástroje JRAPIDoc. Většina
+navržených změn byla provedena.
+
+Ze zpětné vazby byl vytvořen ukázkový projekt, na kterém je demonstrováno použití nástroje.
+Do GUI klienta byly aplikovány navržené změny pro lepší přehlednost a větší komfort
+načítání modelů. Byla vytvořena wiki stránka na stránkách projektu.
+
+\chapter{Srovnání}
+
+Při srovnání nástrojů generujících dokumentaci ke vzdáleným rozhraním má nově vytvořený
+nástroj mnohé co nabídnout oproti alternativám. Při tvorbě nástroje bylo myšleno na pozitiva
+a negativa konkurenčních nástrojů popsaných v 2.3.
+
+Co se týče porovnání tvorby dokumentace REST služeb na platformě Java EE, byl nástroj
+především srovnáván s nástrojem Swagger. Ten je v současné době nejpopulárnějším
+nástrojem na tvorbu dokumentace pro REST služby. Nástroj se od Swaggeru a dalších
+odlišuje kombinací plné podpory specifikace JAX-RS a otevřeným kódem. Nástroj se také
+snaží být jednoduchý na konfiguraci a ovládání na rozdíl od Swagger, který obsahuje poměrně
+velkou a pro začátečníka nesrozumitelnou konfiguraci.
+
+\section{Konfigurace}
+
+Pokud chceme provést konfiguraci Maven pluginu je dobré si ji zobrazit pomocí spuštění
+goalu help u konkrétního pluginu. Při spuštění goalu pro Swagger plugin s parametrem
+-Ddetail=true se žádné informace nezobrazí a volání skončí vyhozenou výjimkou
+NullPointerException. Plugin nástroje Miredot goal pro zobrazení konfigurace ani
+neobsahuje, tudíž nelze získat vůbec žádné informace. Nástroj JRAPIDoc oproti
+ostatním při spuštění zobrazí očekávanou nápovědu konfigurace.
+
+Při srovnání samotné konfigurace se jako nejobtížnější jeví ta ve Swaggeru. Miredot a
+JRAPIDoc mají konfiguraci stručnou a snadno pochopitelnou. Swagger umožňuje
+integrovat dva různé GUI klienty, kde každý je v pom.xml konfigurován pomocí
+jiných elementů. To působí při prvním kontaktu s nástrojem velmi zmatečně,
+protože například ani nevíme o existenci druhého a pokud konfigurujeme jiného
+než jsme si stáhli, není nám jasné proč konfigurace nebyla aplikována.
+
+\section{Podpora JAX-RS API}
+
+Nástroj Swagger po úspěšné konfiguraci a následném pokusu o vygenerování modelu
+dokumentace nic nevygeneruje. Swagger tvoří model jen u tříd a metod, které
+jsou anotovány jeho přídavnými anotacemi. U tříd a metod je vždy nutné
+duplikovat hodnotu z JAX-RS anotace @Path do anotace Swaggeru. Takové řešení je
+problematické, když nemůžeme upravovat zdrojový kód tříd rozhraní. To může
+nastat, pokud jsou třídy do projektu přidány jako knihovny. S touto vlastností
+Swaggeru je spojena ještě jedna nevýhoda. Tou je nutnost modifikace kódu při změně seznamu
+dokumentovaných tříd. JRAPIDoc je flexibilnější, po nakonfigurování pluginu automaticky vyhledá třídy rozhraní.
+Ty jsou vyhledávány v určených Java balíčcích. Může se stát, že v balíčku jsou i třídy, které
+dokumentovat nechceme. Taková funkčnost je řešena za pomocí konfigurace, ve
+které se vydefinuje seznam tříd k vynechání. Pokud nastane situace, kdy v jednom
+buildu je nutné vygenerovat více než jednu dokumentaci, se Swaggerem se to
+nepodaří, protože je vždy nutný zásah do zdrojového kódu.
+
+Pokud jsou v třídě rozhraní přítomny atributy, které jsou anotovány pomocí 
+@MatrixParam, @CookieParam a @FormParam, Swagger je v dokumentaci
+nezobrazí. Stejný problém nastane i při použití anotací nad setter metodami
+atributů. Po spuštění JRAPIDoc jsou v dokumentaci atributy injektované všemi
+definovanými anotacemi (@MatrixParam, @CookieParam, @FormParam, @QueryParam,
+@PathParam a @HeaderParam) z JAX-RS. Je také možné injektovat parametry
+konstruktoru, tuto vlastnost podporuje nástroj JRAPIDoc, Swagger nikoliv.
+
+Výše zmíněnými anotacemi lze injektovat i jiné datové typy než jsou Java
+primitivní typy a String (viz \ref{ch:atributy}). Runtime provádí převod na tyto
+typy z datového typu String, tudíž v dokumentaci by se měl objevit datový
+typ String a ne ten, který vznikne transformací v runtime.
+Swagger ovšem do dokumentace vygeneruje datové typy až po převodu ze String, což
+není korektní. JRAPIDoc korektně vygeneruje informaci o datovém typu.
+
+Ve specifikaci je definováno dynamické rozhodování obsluhy požadavku a slouží
+pro to tzv. sub-resource lokátory. Podrobnější informace o sub-resource
+lokátorech jsou popsány v \ref{subsec:resource-metoda}. JRAPIDoc takové chování
+plně podporuje narozdíl od Swagger. Ten se k sub-resource lokátorům chová jako
+by se jednalo o resource metodu. Pokud jsou v rozhraní použity sub-resource
+lokátory výsledkem Swaggeru je vypsání chyby a není zobrazena dokumentace
+ani k ostatním metodám a rozhraním.
+
+JAX-RS specifikuje dědičnost tříd, se vzdáleným rozhraním, algoritmem popsaným v
+\ref{subsec:dedicnost-resource-trid}. Swagger tento nevyužívá a dědičnost tříd
+ignoruje. Anotace definované v nadtřídách a interfacech jsou ignorovány. I přes
+přidání Swagger anotací do třídy předka a potomka metoda v dokumentaci zahrnuta
+není. JRAPIDoc takto definovaný algoritmus pro průchod předky aplikuje při
+introspekci kódu a výsledkem je model dokumentace, který odpovídá navrženému rozhraní.
 
 
-%*****************************************************************************
+
+
+
+
+
+
+V kontextu SOAP webových služeb na platformě Java EE se nepodařilo najít alternativu pro
+srovnání nástroje. Výsledkem této práce je tak pravděpodobně první nástroj svého druhu,
+který v sobě obsahuje možnost tvorby dokumentace pro WS. Tvorba dokumentace pro REST
+i WS při použití jednoho nástroje má tu výhodu, že dokumentace je sjednocená jak po
+grafické, tak po obsahové stránce.
+a
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+a
+
+\chapter{Budoucí práce}
+
+Bylo by možné přidat volitelně generování modelu do jiných formátů než je JSON a do jiných
+specifikací modelu než používá nástroj defaultně. Například by mohlo jít o podporu
+serializace stávající struktury modelu do XML formátu či podporu transformace a
+vygenerování modelu do WADL. Jelikož nástroj poskytuje rozhraní pro přidání rozšiřujících
+operací, nebyla by nutná změna v kódu nástroje, ale stačilo by pouze implementovat a přidat
+operaci do konfigurace pluginu.
+
+Následujícím možným rozšířením by mohla být podpora dalších technologií umožňujících
+vzdálenou komunikaci v Javě EE. Vedle podpory REST a WS by tak mohla jednou z
+takových technologií být JMS.
+
+Momentálně nástroj nepodporuje XML jmenné prostory, které se používají v JAX-WS. Do
+budoucna by mohla přibýt podpora volitelně je do modelu přidat.
+
 \chapter{Závěr}
 
-\begin{itemize}
-\item Zhodnocení splnění cílů DP/BP a  vlastního přínosu práce (při formulaci je třeba vzít v potaz zadání práce).
-\item Diskuse dalšího možného pokračování práce.
-\end{itemize} 
+Diplomová práce si kladla za cíl navržení, implementování a otestování nástroje pro tvorbu
+dokumentace vzdáleného rozhraní na technologiích JAX-WS a JAX-RS. Důležitou
+prerekvizitou samotné tvorby nástroje bylo zanalyzování principů tvorby vzdáleného rozhraní
+především pak na platformě Java EE. Nástroj byl vyvinut jako zásuvný modul do Apache
+Maven. Pro tvorbu dokumentace projektu obsahujícího Java třídy se vzdáleným rozhraním je
+postačující nástroj napojit do životního cyklu buildu a provést základní konfiguraci. Pro
+kvalitnější a podrobnější dokumentaci je možné do kódu rozhraní přidat pomocné prvky ve
+formě Java anotací, které byly vytvořeny jako doplněk k Maven pluginům.
+
+Po závěrečné fázi realizace byly na nástroji provedeny integrační a uživatelské testy.
+Výsledky z těchto testů byly vzaty v potaz a byly zakomponovány do nástroje.
+
+Cíl práce se podařilo splnit podle zadání. Nástroj navíc poskytuje rozhraní, které umožňuje do
+nástroje doplnit vlastní operace nad modelem rozhraní. Dále je možné některé komponenty
+nahradit za jiné.
+
+Nástroj a jeho zdrojový kód je uvolněn pod open-source svobodnou licencí a bude integrován
+do projektu jBPM.
+
+\chapter{Reference}
+a
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a 
+
+aa
+
+a
+
+a
 
 %*****************************************************************************
-% Seznam literatury je v samostatnem souboru reference.bib. Ten
-% upravte dle vlastnich potreb, potom zpracujte (a do textu
-% zapracujte) pomoci prikazu bibtex a nasledne pdflatex (nebo
-% latex). Druhy z nich alespon 2x, aby se poresily odkazy.
-
-% originally following specification for bibliography formating was used
-%\bibliographystyle{abbrv}
-
-% Here is an improvment by Petr Dlouhy (April 2010).
-% It is mainly for supervisors who expect Czech fomrating rules for references
-% Additional feature is live url addresses to sources from your pdf file
-% It requires the file csplainnat.bst (included in this sample zipfile).
-
-\bibliographystyle{csplainnat}
-
-%bibliographystyle{plain}
-%\bibliographystyle{psc}
-{
-%JZ: 11.12.2008 Kdo chce mit v techto ukazkovych odkazech take odkaz na CSTeX:
-\def\CS{$\cal C\kern-0.1667em\lower.5ex\hbox{$\cal S$}\kern-0.075em $}
-\bibliography{reference}
-}
 
 % M. Dušek radi:
 %\bibliographystyle{alpha}
@@ -2081,345 +2717,164 @@ Popis implementace/realizace se zaměřením na nestandardní části řešení.
 %*****************************************************************************
 \appendix
 
-\chapter{Testování zaplnění stránky a odsazení odstavců}
-\textbf{\large Tato příloha nebude součástí vaší práce. 
-Slouží pouze jako příklad formátování textu.}
-
-\section*{}
-Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili?
-
-Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili?
-
-Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili?
-
-Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili?
-
-Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili?
-
-Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili?
-
-Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili?
-
-Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili?
-
-Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili?
-
-Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili?
-
-Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili?
-
-Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili?
-
-Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili?
-
-Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili?
-
-Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili?
-
-Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili?
-
-Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili?
-
-Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili?
-
-Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili?
-
-Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili? Určitě existuje nějaká pěkná latinská věta, která se k tomuhle testování používá, ale co mají dělat ti, kteří se nikdy latinsky neučili?
-
-%*****************************************************************************
-\chapter{Pokyny a návody k formátování textu práce}
-\textbf{\large Tato příloha samozřejmě nebude součástí vaší práce. Slouží pouze jako příklad formátování textu.}
-
-Používat se dají všechny příkazy systému \LaTeX. Existuje velké množství volně přístupné dokumentace, tutoriálů, příruček a dalších materiálů v elektronické podobě. Výchozím bodem, kromě Googlu, může být stránka CSTUG (Czech Tech Users Group) \cite{CSTUG}. Tam najdete odkazy na další materiály.  Vetšinou dostačující a přehledně organizovanou elektronikou dokumentaci najdete například na \cite{latexdocweb} nebo \cite{latexwiki}.
-
-Existují i různé nadstavby nad systémy \TeX{} a \LaTeX, které výrazně usnadní psaní textu zejména začátečníkům. Velmi rozšířený v Linuxovém prostředí je systém Kile.
-
-
-\section{Vkládání obrázků}
-Obrázky se umísťují do plovoucího prostředí \verb|figure|. Každý obrázek by měl obsahovat \textbf{název} (\verb|\caption|) a \textbf{návěští} (\verb|\label|). Použití příkazu pro vložení obrázku \\\verb|\includegraphics| je podmíněno aktivací (načtením) balíku graphicx příkazem\\ \verb|\usepackage{graphicx}|.
-
-Budete-li zdrojový text zpracovávat pomocí programu \verb|pdflatex|, očekávají se obrázky s příponou \verb|*.pdf|\footnote{pdflatex umí také formáty PNG a JPG.}, použijete-li k formátování \verb|latex|, očekávají se obrázky s příponou \verb|*.eps|.\footnote{Vzájemnou konverzi mezi snad všemi typy obrazku včetně změn vekostí a dalších vymožeností vám může zajistit balík ImageMagic  (http://www.imagemagick.org/script/index.php). Je dostupný pod Linuxem, Mac OS i MS Windows. Důležité jsou zejména příkazy convert a identify.}
-
-\begin{figure}[ht]
-\begin{center}
-\includegraphics[width=5cm]{figures/LogoCVUT}
-\caption{Popiska obrázku}
-\label{fig:logo}
-\end{center}
-\end{figure}
-
-Příklad vložení obrázku:
-\begin{verbatim}
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=5cm]{figures/LogoCVUT}
-\caption{Popiska obrazku}
-\label{fig:logo}
-\end{center}
-\end{figure}
-\end{verbatim}
-
-\section{Kreslení obrázků}
-Zřejmě každý z vás má nějaký oblíbený nástroj pro tvorbu obrázků. Jde jen o to, abyste dokázali obrázek uložit v požadovaném formátu nebo jej do něj konvertovat (viz předchozí kapitola). Je zřejmě vhodné kreslit obrázky vektorově. Celkem oblíbený, na ovládání celkem jednoduchý a přitom dostatečně mocný je například program Inkscape.
-
-Zde stojí za to upozornit na kreslící programe Ipe \cite{ipe}, který dokáže do obrázku vkládat komentáře přímo v latexovském formátu (vzroce, stejné fonty atd.). Podobné věci umí na Linuxové platformě nástroj Xfig. 
-
-Za pozornost ještě stojí schopnost editoru Ipe importovat obrázek (jpg nebo bitmap) a krelit do něj latexovské popisky a komentáře. Výsledek pak umí exportovat přímo do pdf.
-
-\section{Tabulky}
-Existuje více způsobů, jak sázet tabulky. Například je možno použít prostředí \verb|table|, které je velmi podobné prostředí \verb|figure|. 
-
-\begin{table}
-\begin{center}
-\begin{tabular}{|c|l|l|}
-\hline
-\textbf{DTD} & \textbf{construction} & \textbf{elimination} \\
-\hline
-$\mid$ & \verb+in1|A|B a:sum A B+ & \verb+case([_:A]a)([_:B]a)ab:A+\\
-&\verb+in1|A|B b:sum A B+ & \verb+case([_:A]b)([_:B]b)ba:B+\\
-\hline
-$+$&\verb+do_reg:A -> reg A+&\verb+undo_reg:reg A -> A+\\
-\hline
-$*,?$& the same like $\mid$ and $+$ & the same like $\mid$ and $+$\\
-& with \verb+emtpy_el:empty+ & with \verb+emtpy_el:empty+\\
-\hline
-R(a,b) & \verb+make_R:A->B->R+ & \verb+a: R -> A+\\
- & & \verb+b: R -> B+\\
-\hline
-\end{tabular}
-\end{center}
-\caption{Ukázka tabulky}
-\label{tab:tab1}
-\end{table}
-
-Zdrojový text tabulky \ref{tab:tab1} vypadá takto:
-\begin{verbatim}
-\begin{table}
-\begin{center}
-\begin{tabular}{|c|l|l|}
-\hline
-\textbf{DTD} & \textbf{construction} & \textbf{elimination} \\
-\hline
-$\mid$ & \verb+in1|A|B a:sum A B+ & \verb+case([_:A]a)([_:B]a)ab:A+\\
-&\verb+in1|A|B b:sum A B+ & \verb+case([_:A]b)([_:B]b)ba:B+\\
-\hline
-$+$&\verb+do_reg:A -> reg A+&\verb+undo_reg:reg A -> A+\\
-\hline
-$*,?$& the same like $\mid$ and $+$ & the same like $\mid$ and $+$\\
-& with \verb+emtpy_el:empty+ & with \verb+emtpy_el:empty+\\
-\hline
-R(a,b) & \verb+make_R:A->B->R+ & \verb+a: R -> A+\\
- & & \verb+b: R -> B+\\
-\hline
-\end{tabular}
-\end{center}
-\caption{Ukázka tabulky}
-\label{tab:tab1}
-\end{table}
-\begin{table}
-\end{verbatim}
-
-\section{Odkazy v textu}
-\subsection{Odkazy na literaturu}
-Jsou realizovány příkazem \verb|\cite{odkaz}|. 
-
-Seznam literatury je dobré zapsat do samostatného souboru a ten pak zpracovat programem bibtex (viz soubor \verb|reference.bib|). Zdrojový soubor pro \verb|bibtex| vypadá například takto:
-\begin{verbatim}
-@Article{Chen01,
-  author  = "Yong-Sheng Chen and Yi-Ping Hung and Chiou-Shann Fuh",
-  title   = "Fast Block Matching Algorithm Based on 
-             the Winner-Update Strategy",
-  journal = "IEEE Transactions On Image Processing",
-  pages   = "1212--1222",
-  volume  =  10,
-  number  =   8,
-  year    = 2001,
-}
-
-@Misc{latexdocweb,
-  author  = "",
-  title   = "{\LaTeX} --- online manuál",
-  note    = "\verb|http://www.cstug.cz/latex/lm/frames.html|",
-  year    = "",
-}
-...
-\end{verbatim}
-
-%11.12.2008, 3.5.2009
-\textbf{Pozor:} Sazba názvů odkazů je dána Bib\TeX{} stylem\\ (\verb|\bibliographystyle{abbrv}|). 
-%Budete-li používat české prostředí (\verb|\usepackage[czech]{babel}|), 
-Bib\TeX{} tedy obvykle vysází velké pouze počáteční písmeno z názvu zdroje, 
-ostatní písmena zůstanou malá bez ohledu na to, jak je napíšete. 
-Přesněji řečeno, styl může zvolit pro každý typ publikace jiné konverze. 
-Pro časopisecké články třeba výše uvedené, jiné pro monografie (u nich často bývá 
-naopak velikost písmen zachována).
-
-Pokud chcete Bib\TeX u napovědět, která písmena nechat bez konverzí 
-(viz \texttt{title = "\{$\backslash$LaTeX\} -{}-{}- online manuál"} 
-v~předchozím příkladu), je nutné příslušné písmeno (zde celé makro) uzavřít 
-do složených závorek. Pro přehlednost je proto vhodné celé parametry 
-uzavírat do uvozovek (\texttt{author = "\dots"}), nikoliv do složených závorek.
-
-Odkazy na literaturu ve zdrojovém textu se pak zapisují:
-\begin{verbatim}
-Podívejte se na \cite{Chen01}, 
-další detaily najdete na \cite{latexdocweb}
-\end{verbatim}
-
-Vazbu mezi soubory \verb|*.tex| a \verb|*.bib| zajistíte příkazem 
-\verb|\bibliography{}| v souboru \verb|*.tex|.  V našem případě tedy zdrojový 
-dokument \verb|thesis.tex| obsahuje příkaz\\
-\verb|\bibliography{reference}|.
-
-Zpracování zdrojového textu s odkazy se provede postupným voláním programů\\
-\verb|pdflatex <soubor>| (případně \verb|latex <soubor>|), \verb|bibtex <soubor>| 
-a opět\\ \verb|pdflatex <soubor>|.\footnote{První volání \texttt{pdflatex} 
-vytvoří soubor s~koncovkou \texttt{*.aux}, který je vstupem pro program 
-\texttt{bibtex}, pak je potřeba znovu zavolat program \texttt{pdflatex} 
-(\texttt{latex}), který tentokrát zpracuje soubory s příponami \texttt{.aux} a 
-\texttt{.tex}. 
-Informaci o případných nevyřešených odkazech (cross-reference) vidíte přímo při 
-zpracovávání zdrojového souboru příkazem \texttt{pdflatex}. Program \texttt{pdflatex} 
-(\texttt{latex}) lze volat vícekrát, pokud stále vidíte nevyřešené závislosti.}
-
-
-Níže uvedený příklad je převzat z dříve existujících pokynů studentům, kteří 
-dělají svou diplomovou nebo bakalářskou práci v~Grafické skupině.\footnote{Několikrát 
-jsem byl upozorněn, že web s těmito pokyny byl zrušen, proto jej zde přímo necituji. 
-Nicméně příklad sám o sobě dokumentuje obecně přijímaný konsensus ohledně citací 
-v~bakalářských a diplomových pracích na KP.} Zde se praví:
-\begin{small}
-\begin{verbatim}
-...
-j) Seznam literatury a dalších použitých pramenů, odkazy na WWW stránky, ...
- Pozor na to, že na veškeré uvedené prameny se musíte v textu práce 
- odkazovat -- [1]. 
-Pramen, na který neodkazujete, vypadá, že jste ho vlastně nepotřebovali 
-a je uveden jen do počtu. Příklad citace knihy [1], článku v časopise [2], 
-stati ve sborníku [3] a html odkazu [4]: 
-[1] J. Žára, B. Beneš;, and P. Felkel. 
-     Moderní počítačová grafika. Computer Press s.r.o, Brno, 1 edition, 1998. 
-     (in Czech). 
-[2] P. Slavík. Grammars and Rewriting Systems as Models for Graphical User 
-     Interfaces. Cognitive Systems, 4(4--3):381--399, 1997. 
-[3] M. Haindl, Š. Kment, and P. Slavík. Virtual Information Systems. 
-     In WSCG'2000 -- Short communication papers, pages 22--27, Pilsen, 2000. 
-     University of West Bohemia. 
-[4] Knihovna grafické skupiny katedry počítačů: 
-     http://www.cgg.cvut.cz/Bib/library/ 
-\end{verbatim}
-\end{small}
-\ldots{} abychom výše citované odkazy skutečně našli v (automaticky generovaném) seznamu literatury tohoto textu, musíme je nyní alespoň jednou citovat: Kniha \cite{kniha}, článek v~časopisu \cite{clanek}, příspěvek na konferenci \cite{sbornik}, www odkaz \cite{www}.
-
-Ještě přidáme další ukázku citací online zdrojů podle české normy. Odkaz na wiki o frameworcich \cite{wiki:framework} a ORM \cite{wiki:orm}. Použití viz soubor \verb|reference.bib|. V seznamu literatury by nyní měly být živé odkazy na zdroje. V \verb|reference.bib| je zcela nový typ publikace. Detaily dohledal a dodal Petr Dlouhý v dubnu 2010. Podrobnosti najdete ve zdrojovém souboru tohoto textu v komentáři u příkazu \verb|\thebibliography|.
-
-\subsection{Odkazy na obrázky, tabulky a kapitoly}
-\begin{itemize}
-\item Označení místa v textu, na které chcete později čtenáře práce odkázat, se provede příkazem \verb|\label{navesti}|. Lze použít v prostředích \verb|figure| a  \verb|table|, ale též za názvem kapitoly nebo podkapitoly.
-\item Na návěští se odkážeme příkazem \verb|\ref{navesti}| nebo \verb|\pageref{navesti}|.
-\end{itemize}
-
-\section{Rovnice, centrovaná, číslovaná matematika}
-Jednoduchý matematický výraz zapsaný přímo do textu se vysází pomocí prostředí \verb|math|, resp. zkrácený zápis pomocí uzavření textu rovnice mezi znaky \verb|$|.
-
-Kód \verb|$ S = \pi * r^2 $| bude vysázen takto: $ S = \pi * r^2 $.
-
-Pokud chcete nečíslované rovnice, ale umístěné centrovaně na samostatné řádky, pak lze použít prostředí \verb|displaymath|, resp. zkrácený zápis pomocí uzavření textu rovnice mezi znaky \verb|$$|. Zdrojový kód: 
-\begin{verb}
-|$$ S = \pi * r^2 $$|
-\end{verb}
-bude pak vysázen takto:
-$$ S = \pi * r^2 $$
-
-Chcete-li mít rovnice číslované, je třeba použít prostředí \verb|eqation|. Kód:
-\begin{verbatim}
-\begin{equation}
-  S = \pi * r^2
-\end{equation}
-
-\begin{equation}
-  V = \pi * r^3
-\end{equation}
-\end{verbatim}
-je potom vysázen takto:
-\begin{equation}
-  S = \pi * r^2
-\end{equation}
-
-\begin{equation}
-  V = \pi * r^3
-\end{equation}
-
-\section{Kódy programu}
-Chceme-li vysázet například část zdrojového kódu programu (bez formátování), hodí se prostředí \verb|verbatim|: 
-\begin{verbatim}
-         (* nickname2 *)
-Lego> Refine in1
-             (do_reg (nickname1 h));
-Refine by  in1 (do_reg (nickname1 h))
-   ?4 : pcdata
-   ?5 : pcdata
-          (* surname2 *)
-Lego> Refine surname1 h;
-Refine by  surname1 h
-   ?5 : pcdata
-          (* email2 *)
-Lego> Refine undo_reg (email1 h);
-Refine by  undo_reg (email1 h)
-*** QED ***
-\end{verbatim}
-
-\section{Další poznámky}
-\subsection{České uvozovky}
-V souboru \verb|k336_thesis_macros.tex| je příkaz \verb|\uv{}| pro sázení českých uvozovek. \uv{Text uzavřený do českých uvozovek.}
-
-% JZ: 3.5.2009 \chapter z book zajistí automaticky
-%\subsection{Začátky kapitol na liché stránky}
-%Ve výsledném textu je dobré, když každá kapitola začíná na liché stránce. Tedy použijte:
-%\begin{verbatim}
-%  \cleardoublepage\include{1_uvod}
-%  \cleardoublepage\include{2_teorie}
-%   atd.\ldots{}
-%\end{verbatim}
-
-%*****************************************************************************
 \chapter{Seznam použitých zkratek}
+a
 
-\begin{description}
-\item[2D] Two-Dimensional
-\item[ABN] Abstract Boolean Networks
-\item[ASIC] Application-Specific Integrated Circuit
-\end{description}
-\vdots
+a
 
-%*****************************************************************************
-\chapter{UML diagramy}
-\textbf{\large Tato příloha není povinná a zřejmě se neobjeví v každé práci. Máte-li ale větší množství podobných diagramů popisujících systém, není nutné všechny umísťovat do hlavního textu, zvláště pokud by to snižovalo jeho čitelnost.}
+aa
 
-%*****************************************************************************
-\chapter{Instalační a uživatelská příručka}
-\textbf{\large Tato příloha velmi žádoucí zejména u softwarových implementačních prací.}
+a
 
-%*****************************************************************************
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+a
+
+\chapter{Instalační a uživatelská příručka} 
+a
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+aa
+
+a
+
+a
+
 \chapter{Obsah přiloženého CD}
-\textbf{\large Tato příloha je povinná pro každou práci. Každá práce musí totiž obsahovat přiložené CD. Viz dále.}
 
-Může vypadat například takto. Váš seznam samozřejmě bude odpovídat typu vaší práce. (viz \cite{infodp}):
-
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=14cm]{figures/seznamcd}
-\caption{Seznam přiloženého CD --- příklad}
-\label{fig:seznamcd}
-\end{center}
-\end{figure}
-
-Na GNU/Linuxu si strukturu přiloženého CD můžete snadno vyrobit příkazem:\\ 
-\verb|$ tree . >tree.txt|\\
-Ve vzniklém souboru pak stačí pouze doplnit komentáře.
-
-Z \textbf{README.TXT} (případne index.html apod.)  musí být rovněž zřejmé, jak programy instalovat, spouštět a jaké požadavky mají tyto programy na hardware.
-
-Adresář \textbf{text}  musí obsahovat soubor s vlastním textem práce v PDF nebo PS formátu, který bude později použit pro prezentaci diplomové práce na WWW.
-
-\end{document}
+\end{document} 
