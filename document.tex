@@ -235,9 +235,9 @@ Translation of Czech abstract into English.
 \vskip 2.75\baselineskip
 % \noindent
 S narůstajícím počtem softwarových produktů, které mají potřebu být mezi sebou vzájemně
-integrovány vznikl velký tlak na unifikaci rozhraní. Byla proto vytvořena řada protokolů a
-technologií, které přinášejí do systémové integrace pravidla a postupy určující jak probíhá
-vzdálená komunikace mezi systémy a jak tvořit poskytovatele a klienty takových rozhraní.
+integrovány, vznikl velký tlak na unifikaci rozhraní. Byla proto vytvořena řada
+protokolů a technologií, které přinášejí do systémové integrace pravidla a
+postupy určující, jak probíhá vzdálená komunikace mezi systémy a jak tvořit poskytovatele a klienty takových rozhraní.
 Pokud existuje k vystavenému rozhraní odpovídající dokumentace, která umožní
 konzumentovi poskytnout všechny potřebné informace o rozhraní, lze poměrně rychle a
 jednoduše provést integraci. V opačném případě nekompletní, neaktuální či jinak
@@ -295,8 +295,8 @@ nákladů potřebných pro tvorbu dokumentace a tím i realizaci systémové int
 \chapter{Úvod} 
 % \section*{}
 Systémová integrace je velmi často skloňovaný pojem. Drtivá většina systémů v dnešní době
-není bez integrace schopna fungovat. Schopnost integrace s jinými systémy je žádoucí,
-protože čím více se umí software integrovat, tím je flexibilnější. Integrace znamená spojení
+není schopna bez integrace fungovat. Schopnost integrace s jinými systémy je
+žádoucí, protože čím více se umí software integrovat, tím je flexibilnější. Integrace znamená spojení
 menších komponent do vetšího celku. Takový celek potom dokáže efektivně pracovat pomocí
 definovaných pravidel pro komunikaci mezi subsytémy. Integraci lze vytvořit na různých
 systémových vrstvách.
@@ -312,19 +312,20 @@ problémy daly vzniknout rozmachu integrace mezi systémy.
 Komunikace mezi komponentami byla často platformově závislá a používaly se pro ni
 proprietární protokoly. Postupem času, jak šly informační technologie dopředu a sílil tlak na
 vznik technologií umožňujících platformovou nezávislost s otevřenými protokoly pro
-komunikaci, jsme ve stavu, kdy máme technologie a standardizované protokoly. S jejich
-pomocí vznikají unifikovaná rozhraní systémů, která zjednodušují realizování integrace mezi
-softwarovými komponentami.
+komunikaci, jsme se dostali do stavu, kdy máme technologie a standardizované
+protokoly. S jejich pomocí vznikají unifikovaná rozhraní systémů, která
+zjednodušují realizování integrace mezi softwarovými komponentami.
 
-Protokoly definují jak probíhá komunikace, technologie definují jak vytvářet rozhraní a
-klienty k nim, opomíjí se však tvorba, obsah a umístění dokumentace. Přestože poskytovatelé
-rozhraní používají jednotné protokoly a technologie, dokumentaci má každý trochu jinou.
+Protokoly definují, jak probíhá komunikace s technologie definují, jak vytvářet
+rozhraní a klienty k nim. Opomíjí se však tvorba, obsah a umístění dokumentace.
+Přestože poskytovatelé rozhraní používají jednotné protokoly a technologie,
+dokumentaci má každý mírně odlišnou.
 Momentálně se můžeme setkat nejčastěji s dokumentací v HTML, dokumentech
 kancelářských balíků či PDF dokumentech. Taková dokumentace je tvořena ručně a má řadu
 nevýhod. Při její tvorbě může být zanesena chyba, dokumentace nemusí být aktuální a nemusí
-odpovídat popisovanému rozhraní. Dále usí existovat člověk, který bude za dokumentaci
-zodpovědný. Provádět integraci se systémem mající neodpovídající dokumentaci může
-prodloužit dobu integrace a tím vzrostou náklady.
+odpovídat popisovanému rozhraní. Dále musí existovat člověk, který bude za
+dokumentaci zodpovědný. Provádět integraci se systémem, který nemá odpovídající
+dokumentaci, může prodloužit dobu integrace a tím vzrostou náklady.
 
 Cílem diplomové práce je navrhnout, implementovat a otestovat nástroj pro automatické
 generování dokumentace vzdálených rozhraní. Nástroj by měl odstranit problémy s tvorbou
@@ -1870,6 +1871,7 @@ public Map<String, String> foo4();
 public void foo5(TypeB<TypeA> d);
 
 public TypeB<TypeA> foo6();
+<<<<<<< HEAD
 
 public <T extends TypeA> void foo7(T t);
 
@@ -1883,6 +1885,21 @@ public <T extends List<TypeA>> void foo11(T l);
 
 public <T extends List<TypeA>> T foo12();
 
+=======
+
+public <T extends TypeA> void foo7(T t);
+
+public <T extends Destination> T foo8();
+
+public <T extends TypeA> void foo9(List<T> t);
+
+public <T extends TypeA> List<T> foo10();
+
+public <T extends List<TypeA>> void foo11(T l);
+
+public <T extends List<TypeA>> T foo12();
+
+>>>>>>> d7f8f8a... a
 public <T> void foo13(T t);
 
 public <T> T foo14();
@@ -2230,8 +2247,8 @@ Vyhledávání JAX-WS a JAX-RS spočívá ve vyhledání tříd majících anota
 První přístup je získání seznamu všech tříd na classpath a jejich postupné nahrávání do paměti
 instancí třídy ClassLoader. Po nahrání třídy do paměti následně dotazování pomocí Java
 Reflection API, zda třída obsahuje požadovanou anotaci. Tento přístup však není nejlepší
-volbou především z hlediska časové náročnosti. V nejhorším případě budou muset být
-nahrány všechny třídy, což může u většího projektu trvat desítky sekund. Nástroj používá
+volbou, především z hlediska časové náročnosti. V nejhorším případě budou muset
+být nahrány všechny třídy, což může u většího projektu trvat desítky sekund. Nástroj používá
 druhou metodu získání tříd, která je rychlejší. Třídy nejsou nahrávány do paměti, ale napřed
 proběhne analýza bytecode a vyberou se pouze ty, které se do paměti nahrají. Poté jejich
 nahrání je možné nad nimi používat Java Reflection API. Nástroj pro tento přístup používá
@@ -2465,10 +2482,9 @@ Při srovnání nástrojů generujících dokumentaci ke vzdáleným rozhraním 
 nástroj mnohé co nabídnout oproti alternativám. Při tvorbě nástroje bylo myšleno na pozitiva
 a negativa konkurenčních nástrojů popsaných v 2.3.
 
-Co se týče porovnání tvorby dokumentace REST služeb na platformě Java EE, byl nástroj
-především srovnáván s nástrojem Swagger. Ten je v současné době nejpopulárnějším
-nástrojem na tvorbu dokumentace pro REST služby. Nástroj se od Swaggeru a dalších
-odlišuje kombinací plné podpory specifikace JAX-RS a otevřeným kódem. Nástroj se také
+Co se týče porovnání tvorby dokumentace REST služeb na platformě Java EE, byl
+nástroj srovnáván především s nástrojem Swagger. Ten je v současné době
+nejpopulárnějším nástrojem na tvorbu dokumentace pro REST služby. Nástroj se od Swaggeru a dalších odlišuje kombinací plné podpory specifikace JAX-RS a otevřeným kódem. Nástroj se také
 snaží být jednoduchý na konfiguraci a ovládání na rozdíl od Swagger, který obsahuje poměrně
 velkou a pro začátečníka nesrozumitelnou konfiguraci.
 
@@ -2494,7 +2510,7 @@ Nástroj Swagger po úspěšné konfiguraci a následném pokusu o vygenerován�
 dokumentace nic nevygeneruje. Swagger tvoří model jen u tříd a metod, které
 jsou anotovány jeho přídavnými anotacemi. U tříd a metod je vždy nutné
 duplikovat hodnotu z JAX-RS anotace @Path do anotace Swaggeru. Takové řešení je
-problematické, když nemůžeme upravovat zdrojový kód tříd rozhraní. To může
+problematické, když není možná úprava zdrojového kódu tříd rozhraní. To může
 nastat, pokud jsou třídy do projektu přidány jako knihovny. S touto vlastností
 Swaggeru je spojena ještě jedna nevýhoda. Tou je nutnost modifikace kódu při změně seznamu
 dokumentovaných tříd. JRAPIDoc je flexibilnější, po nakonfigurování pluginu automaticky vyhledá třídy rozhraní.
@@ -2526,10 +2542,39 @@ není korektní. JRAPIDoc korektně vygeneruje informaci o datovém typu.
 Ve specifikaci je definováno dynamické rozhodování obsluhy požadavku a slouží
 pro to tzv. sub-resource lokátory. Podrobnější informace o sub-resource
 lokátorech jsou popsány v \ref{subsec:resource-metoda}. JRAPIDoc takové chování
-plně podporuje narozdíl od Swagger. Ten se k sub-resource lokátorům chová jako
-by se jednalo o resource metodu. Pokud jsou v rozhraní použity sub-resource
-lokátory výsledkem Swaggeru je vypsání chyby a není zobrazena dokumentace
-ani k ostatním metodám a rozhraním.
+plně podporuje. Ve Swaggeru se situace liší, se sub-resource lokátory  je
+zacházeno jako by se jednalo o resource metody. Pokud jsou v rozhraní
+použity sub-resource lokátory výsledkem Swaggeru je vypsání chyby a není 
+zobrazena dokumentace ani k ostatním metodám a rozhraním.
+
+Specifikace dovoluje nad jednou metodou užití více request method designatorů
+(anotací @GET, @POST atd\ldots). V JRAPIDoc se z jedné Java metody
+vytvoří pro každý její designator jedna metoda v dokumentaci. Vznikne tak vícero
+totožných metod s rozdílným typem HTTP metody. Při generování pomocí Swagger je
+vytvořena pouze jedna metoda odpovídající jednomu typu HTTP metody, druhý a další 
+request method designator jsou ignorováni.
+
+Je také možné vydefinovat si vlastní request method designator, který bude
+reprezentovat nový typ HTTP metody. Tahle funkčnost se může využít pokud ani
+jedna ze standardních HTTP metod není vyhovující. Na \ref{lst:vlastni-designator} je ukázka jak
+lze vytvořit vlastní designator, který má úplně stejné zacházení a vlastnosti
+jako ty zabudované. 
+
+\begin{lstlisting}[frame=single, caption={Vlastní request method
+designator},label={lst:vlastni-designator}] 
+@Target({ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@HttpMethod("CUSTOM")
+public @interface CUSTOM {
+}
+\end{lstlisting}
+
+JRAPIDoc podporuje vlastní request method designatory a zanese vlastní typ HTTP
+metody korektně do dokumentace narozdíl od Swagger. Ten po vytvoření a načtení
+dokumentace skončí chybou oznamující, že metoda nemá nastavený typ HTTP metody a
+nezobrazí vůbec žádnou dokumentaci k rozhraní.
+
+\subsection{Dědičnost tříd vzdáleného rozhraní}
 
 Specifikace dovoluje nad jednou metodou užití více request method designatorů
 (anotací @GET, @POST atd\ldots). V JRAPIDoc se z jedné Java metody
@@ -2563,7 +2608,7 @@ nezobrazí vůbec žádnou dokumentaci k rozhraní.
 JAX-RS specifikuje dědičnost tříd, se vzdáleným rozhraním, algoritmem popsaným v
 \ref{subsec:dedicnost-resource-trid}. Swagger tento nevyužívá a dědičnost tříd
 ignoruje. Anotace definované v nadtřídách a interfacech jsou ignorovány. I přes
-přidání Swagger anotací do třídy předka a potomka metoda v dokumentaci zahrnuta
+přidání Swagger anotací do třídy předka a potomka, metoda v dokumentaci zahrnuta
 není. JRAPIDoc takto definovaný algoritmus pro průchod předky aplikuje při
 introspekci kódu a výsledkem je model dokumentace, který odpovídá navrženému rozhraní.
 
@@ -2630,8 +2675,8 @@ budoucna by mohla přibýt podpora volitelně je do modelu přidat.
 
 Diplomová práce si kladla za cíl navržení, implementování a otestování nástroje pro tvorbu
 dokumentace vzdáleného rozhraní na technologiích JAX-WS a JAX-RS. Důležitou
-prerekvizitou samotné tvorby nástroje bylo zanalyzování principů tvorby vzdáleného rozhraní
-především pak na platformě Java EE. Nástroj byl vyvinut jako zásuvný modul do Apache
+prerekvizitou samotné tvorby nástroje bylo zanalyzování principů tvorby
+vzdáleného rozhraní, především pak na platformě Java EE. Nástroj byl vyvinut jako zásuvný modul do Apache
 Maven. Pro tvorbu dokumentace projektu obsahujícího Java třídy se vzdáleným rozhraním je
 postačující nástroj napojit do životního cyklu buildu a provést základní konfiguraci. Pro
 kvalitnější a podrobnější dokumentaci je možné do kódu rozhraní přidat pomocné prvky ve
