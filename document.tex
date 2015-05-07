@@ -12,7 +12,7 @@
 %%%% \documentclass[11pt,oneside,a4paper]{book}
 % Two-page layout: final printing
 \documentclass[11pt,twoside,a4paper]{book}   
-\renewcommand{\baselinestretch}{1.0} 
+\renewcommand{\baselinestretch}{1.0}
 %=-=-=-=-=-=-=-=-=-=-=-=--=%
 % The user of this template may find useful to have an alternative to these 
 % officially suggested packages:
@@ -333,9 +333,9 @@ aby se dokumentace aktualizovala vždy se změnou rozhraní.
 
 \chapter{Analýza}
 \section{Specifikace technologií pro vzdálená rozhraní}
-Způsobů jak na platformě Java Enterprise Edition vzdáleně komunikovat mezi systémy přes
-internet je několik. V současné době se pro integraci nejvíce používají SOAP Web Services
-(WS), Representational State Transfer (REST) a Java Message Service (JMS). Dalšími
+Způsobů, jak na platformě Java Enterprise Edition vzdáleně komunikovat mezi
+systémy přes internet, je několik. V současné době se pro integraci nejvíce
+používají SOAP Web Services (WS), Representational State Transfer (REST) a Java Message Service (JMS). Dalšími
 způsoby vzdálené komunikace jsou například
 Remote Method Invocation (RMI) nebo
 Common Object Request Broker Architecture (CORBA). Tato práce se zabývá prvními třemi
@@ -369,21 +369,20 @@ formátu. Nejčastěji se užívá protokol SOAP (Simple Access Object Protocol)
 jak bude vypadat přenášená zpráva, která se skládá ze čtyř hlavních částí:
 
 \begin{itemize}
-\item Envelope – kořenový element SOAP zprávy, který je povinný a definuje, že jeho
+\item \textbf{\textit{Envelope}} – kořenový element SOAP zprávy, který je povinný a definuje, že jeho
 obsahem je SOAP zpráva.
 
-\item Header –
-volitelný element, který se používá pro přidání nové funkcionality a
-vlastností, jakou může být například autentizace. Ve zprávě je povoleno použít více
+\item \textbf{\textit{Header}} – volitelný element, který se používá pro přidání
+nové funkcionality a vlastností, jakou může být například autentizace. Ve zprávě je povoleno použít více
 těchto elementů. Pokud je header ve zprávě přítomen, musí být umístěn jako první
 child element elementu envelope.
  
-\item Body – povinný element, který obsahuje přenášená data nazývána „payload“. Body
-musí být uvnitř elementu envelope a následuje až za elementy message. Sémantika
+\item \textbf{\textit{Body}} – povinný element, který obsahuje přenášená
+data nazývána „payload“. Body musí být uvnitř elementu envelope a následuje až za elementy message. Sémantika
 obsahu v elementu body je definována v XML Schema.
 
-\item Fault – tento element je umístěn v elementu body. Ve zprávě se objevuje, pokud je
-nutné poslat informaci o vzniklé chybě. Fault má definováno, jak má informace o
+\item \textbf{\textit{Fault}} – tento element je umístěn v elementu body.
+Ve zprávě se objevuje, pokud je nutné poslat informaci o vzniklé chybě. Fault má definováno, jak má informace o
 chybě vypadat a obsahuje následující subelementy:
 
 \begin{itemize}
@@ -415,34 +414,34 @@ Definitons formuluje název webové služby a deklaruje jmenné prostory, které
 „namespacy“. Uvnitř definitions je několik přímých elementů:
 
 \begin{itemize}
-  \item Types - element obsahující všechny datové typy, které se mohou přenášet. Datové
-typy jsou zapsány v XML Schema.
+  \item \textbf{\textit{Types}} - element obsahující všechny datové typy,
+  které se mohou přenášet. Datové typy jsou zapsány v XML Schema.
 
-  \item Message – značí abstrakci přenášené zprávy. Těchto elementů bývá zpravidla více,
-protože pro jednu metodu, která má mít vstup, výstup a fault, musí existovat tři tyto
+  \item \textbf{\textit{Message}} – značí abstrakci přenášené zprávy.
+  Těchto elementů bývá zpravidla více, protože pro jednu metodu, která má mít vstup, výstup a fault, musí existovat tři tyto
 elementy. Části elementu message se budou skládat z datových typů definovaných v
  elementu types. 
 
-  \item PortType – jedná se o abstraktní množinu operací k jednomu nebo více endpointům,
-které mohou být volány. Těmto operacím se potom v elementu binding nastavuje
+  \item \textbf{\textit{PortType}} – jedná se o abstraktní množinu
+  operací k jednomu nebo více endpointům, které mohou být volány. Těmto operacím se potom v elementu binding nastavuje
 transportní protokol.
 
   \begin{itemize}
-    \item Operation - přímý potomek elementu portType, který lze přirovnat k metodě v
-klasických programovacích jazycích jako je například Java či C. V tomto
+    \item \textit{Operation} - přímý potomek elementu portType,
+    který lze přirovnat k metodě v klasických programovacích jazycích jako je například Java či C. V tomto
 elementu je definováno jméno metody, input message, output message a fault.
 Části input, output a fault se odkazují na definice v elementech message.
 
   \end{itemize}
-  \item Binding – tento element definuje pro každý portType konkrétní datové typy, operace
-a protokol.
+  \item \textbf{\textit{Binding}} – tento element definuje pro každý
+  portType konkrétní datové typy, operace a protokol.
 
-  \item Service - poslední přímý potomek kořenového elementu. Uvnitř něj je definován
-seznam endpointů. Binding služby je zde mapován na port.
+  \item \textbf{\textit{Service}} - poslední přímý potomek kořenového
+  elementu. Uvnitř něj je definován seznam endpointů. Binding služby je zde mapován na port.
 
   \begin{itemize}
-    \item Port - přímý potomek elementu service. Port je kombinací bindingu a síťové
-adresy, na které je služba dostupná.
+    \item \textit{Port} - přímý potomek elementu service. Port je
+    kombinací bindingu a síťové adresy, na které je služba dostupná.
 
   \end{itemize}
 \end{itemize}
@@ -465,15 +464,15 @@ Informace o určité službě jsou obsaženy napříč třemi komponentami, kter
 v každé jsou informace jiného charakteru:
 
 \begin{itemize}
-  \item Bílé stránky - obsahují informace o poskytovateli služby, jako je například jméno
-firmy, podrobnosti o firmě či kontakt do firmy.
+  \item \textbf{\textit{Bílé stránky}} - obsahují informace o
+  poskytovateli služby, jako je například jméno firmy, podrobnosti o firmě či kontakt do firmy.
 
-  \item Žluté stránky - obsahují zařazení služby či poskytovatele do taxonomie, která může
-být například geografická. Dalšími typy taxonomie jsou Standard Industrial
+  \item \textbf{\textit{Žluté stránky}} - obsahují zařazení služby
+  či poskytovatele do taxonomie, která může být například geografická. Dalšími typy taxonomie jsou Standard Industrial
 Classification či United Nations Standard Products and Services Code.
 
-  \item Zelené stránky - v této komponentě nalezneme technické informace o službě. V
-zelených stránkách lze zjistit, na jaké adrese je služba dostupná, service binding nebo
+  \item \textbf{\textit{Zelené stránky}} - v této komponentě
+  nalezneme technické informace o službě. V zelených stránkách lze zjistit, na jaké adrese je služba dostupná, service binding nebo
 parametry či odkazy na specifikaci rozhraní. Mohou zde být informace s kontaktními
 údaji na službu s určitým bindingem. Pokud má totiž služba více bindingů, bude mít i
 více záznamů v zelených stránkách.
@@ -487,57 +486,57 @@ se o architektonický styl pro návrh aplikací a název vznikl jako zkratka z  
 
 Aplikaci můžeme nazvat REST, pokud bude splňovat následující omezení:
 
-\textbf{\textit{Klient-server}}
+\begin{itemize}
+  \item \textbf{\textit{Klient-server}}
 
 Aplikace je postavena na modelu, kde je klient oddělen od serveru. Server si nepamatuje
 stavy, ve kterých se klienti nachází. Klienti a servery mohou být vyvíjeni paralelně, protože
 mají definované rozhraní mezi sebou. Další výhodou je, že mohou být nahrazeni za jiné
 klienty nebo servery.
 
-\textbf{\textit{Bezstavová komunikace}}
+\item \textbf{\textit{Bezstavová komunikace}}
 
 Veškerý stav, ve kterém se aplikace nachází si uchovává klient. Bezstavová aplikace se velmi
 dobře škáluje. Na druhou stranu musí každý dotaz obsahovat veškeré informace o stavu
 aplikace vůči klientovi. Pokud klient poslal požadavek, který ještě nebyl vyřízen, nachází se
 klient v tzv. stavu přechodu.
 
-\textbf{\textit{Cache}}
+\item \textbf{\textit{Cache}}
 
 Stejně jako World Wide Web, klienti mohou kešovat odpovědi. Odpovědi musí být
 definovány jako kešovatelné nebo nekešovatelné. Dobře spravované kešování aplikace
 pomáhá k lepšímu výkonu, protože se v mnoha případech nemusí posílat požadavek až do
 aplikace na serveru.
 
-\textbf{\textit{Vrstvený systém}}
+\item \textbf{\textit{Vrstvený systém}}
 
 Vrstvený systém dovolí mezi server a klienta vložit systém jiný, kterým může být cache nebo
 loadbalancer, aniž by klient pocítil změnu. Klient nemá k dispozici informaci, se kterým
 systémem komunikuje.
 
-\textbf{\textit{Jednotné rozhraní}}
+\item \textbf{\textit{Jednotné rozhraní}}
 
 Jednotným rozhraním je myšleno použití malé množiny dobře definovaných metod k
 manipulaci se zdroji. K tomuto rozhraní se vztahují následující omezení:
 
-\begin{itemize}
-  \item HATEOAS (hypermedia as the engine of application state) – klienti mohou přejít
-dynamicky do jiného stavu v aplikaci přes hypermedia poslané serverem v předchozí
-odpovědi. Jinými slovy, odpověď od serveru obsahuje hyperlinky, na které může klient
+	\begin{itemize}
+ 	 \item \textit{HATEOAS (hypermedia as the engine of application state)} –
+ 	 klienti mohou přejít dynamicky do jiného stavu v aplikaci přes hypermedia poslané serverem v předchozí odpovědi. Jinými slovy, odpověď od serveru obsahuje hyperlinky, na které může klient
 přejít, aby se dostal do jiného stavu v aplikaci.
-  \item Adresovatelné zdroje – každý zdroj poskytující informace a data musí být
-jednoznačně identifikovaný svou URI (Uniform Resource Identifier).
-\item Manipulace se zdrojem a jejich reprezentacemi – pokud se klient nachází na
-nějakém zdroji, může s ním provádět operace modifikace či smazání.
-\item Orientace na reprezentaci – u jedné URI lze nastavit, aby dokázala použít odlišné
-formáty dat, protože ne všechny platformy užívají stejný formát. Například webový
+	  \item \textit{Adresovatelné zdroje} – každý zdroj
+	  poskytující informace a data musí být jednoznačně identifikovaný svou URI (Uniform Resource Identifier).
+		\item \textit{Manipulace se zdrojem a jejich reprezentacemi} – pokud se klient nachází na nějakém zdroji, může s ním provádět operace modifikace či smazání.
+		\item \textit{Orientace na reprezentaci} – u jedné
+		URI lze nastavit, aby dokázala použít odlišné formáty dat, protože ne všechny platformy užívají stejný formát. Například webový
 prohlížeč používá HTML a JavaScript, který potřebuje JSON. Java aplikace může
 vyžadovat XML.
-\end{itemize}
+	\end{itemize}
 
-\textbf{\textit{Kód na vyžádání (volitelné)}}
+\item\textbf{\textit{Kód na vyžádání (volitelné)}}
 
 Server může poslat na klienta spustitelný kód, který rozšiřuje funkčnost. Takový kód může
 být ve formě JavaScriptu nebo třeba Java appletu.
+\end{itemize}
 
 \subsubsection{Svázání RESTu s protokolem HTTP}
 
@@ -669,9 +668,12 @@ Parametry a návratové typy jsou rozděleny na tři módy podle toho, ve který
 vyskytují.
 
 \begin{itemize}
-  \item In – hodnota je přenášena ve zprávě z klienta na SEI, ale není přenášena zpět.
-  \item Out – hodnota je přenášena ve zprávě z SEI ke klientovi, ale není přenášena zpět.
-  \item In/out – hodnota je přenášena z klienta na SEI a zpět ke klientovi.
+  \item \textbf{\textit{In}} – hodnota je přenášena ve zprávě z klienta na
+  SEI, ale není přenášena zpět.
+  \item \textbf{\textit{Out}} – hodnota je přenášena ve zprávě z SEI ke
+  klientovi, ale není přenášena zpět.
+  \item \textbf{\textit{In/Out}} – hodnota je přenášena z klienta na SEI a
+  zpět ke klientovi.
 \end{itemize}
 
 Návratový typ je vždycky mód out. U parametrů, jejichž typ je obalen třídou Holder
@@ -707,25 +709,30 @@ Kombinováním těchto tří elementů lze vytvářet odlišné struktury zpráv
 daty. Struktura zprávy je určena na základě zvolených hodnot v elementech @SOAPBinding.
 
 \begin{enumerate}
-  \item Style
+  \item \textbf{\textit{Style}}
   	\begin{enumerate}[(a)]
-  	  \item DOCUMENT - obsah SOAP body bude XML dokument, který bude
-možno validovat vůči předdefinovanému XML Schema dokumentu.
-  	  \item RPC - SOAP body bude obsahovat XML reprezentaci volání metody.
+  	  \item \textit{DOCUMENT} - obsah SOAP body bude XML dokument, který
+  	  bude možno validovat vůči předdefinovanému XML Schema dokumentu.
+  	  \item \textit{RPC} - SOAP body bude obsahovat XML reprezentaci volání
+  	  metody.
 Použije se přitom jméno metody jako hlavní element a jako potomci budou
 parametry metody a návratová hodnota.
 	\end{enumerate}
-  \item Use
+  \item \textbf{\textit{Use}}
 	\begin{enumerate}[(a)]
-	  \item ENCODING – udává, jak jsou hodnoty zakódovány do XML formátu.
+	  \item \textit{ENCODING} – udává, jak jsou hodnoty zakódovány do XML
+	  formátu.
 SOAP ENCODING je rozšíření SOAP Frameworku a nabízí pravidla, jak
 konvertovat jakákoliv data z SOAP datového modelu do XML formátu.
-	  \item LITERAL - definuje, že data jsou serializována podle XML Schema.
+	  \item \textit{LITERAL} - definuje, že data jsou serializována podle
+	  XML Schema.
 	\end{enumerate}
-  \item ParameterStyle
+  \item \textbf{\textit{ParameterStyle}} 
 	\begin{enumerate}[(a)]
-	  \item WRAPPED - říká, že zpráva bude zabalena ještě do jednoho elementu.
-	  \item BARE - udává neobalování hodnot do jednoho hlavního předka.
+	  \item \textit{WRAPPED} - říká, že zpráva bude zabalena ještě do
+	  jednoho elementu.
+	  \item \textit{BARE} - udává neobalování hodnot do jednoho hlavního
+	  předka.
 	\end{enumerate}
 \end{enumerate}
 
@@ -742,9 +749,9 @@ XML Schema konstrukcích.
 Document wrapped je definován v anotaci @SOPABinding s následujícími vlastnostmi:
 
 \begin{itemize}
-  \item style – DOCUMENT,
-  \item use – LITERAL,
-  \item parameterStyle – WRAPPED.
+  \item \textbf{\textit{style}} – DOCUMENT,
+  \item \textbf{\textit{use}} – LITERAL,
+  \item \textbf{\textit{parameterStyle}} – WRAPPED.
 \end{itemize}
 
 Pro parametry se vytvoří wrapper, do kterého budou vygenerované typy umístěny a pro
@@ -763,9 +770,9 @@ response beany.
 Styl document bare je definován v anotaci @SOAPBinding s následujícími vlastnostmi:
 
 \begin{itemize}
-  \item style – DOCUMENT,
-  \item use – LITERAL,
-  \item parameterStyle – BARE.
+  \item \textbf{\textit{style}} – DOCUMENT,
+  \item \textbf{\textit{use}} – LITERAL,
+  \item \textbf{\textit{parameterStyle}} – BARE.
 \end{itemize}
 
 Při aplikaci document bare jsou na metodu kladeny tyto požadavky:
@@ -787,9 +794,9 @@ výstupní typ metody.
 Styl RPC je definován v anotaci @SOAPBinding s následujícími vlastnostmi:
 
 \begin{itemize}
-  \item style – RPC,
-  \item use – LITERAL,
-  \item parameterStyle – WRAPPED.
+  \item \textbf{\textit{style}} – RPC,
+  \item \textbf{\textit{use}} – LITERAL,
+  \item \textbf{\textit{parameterStyle}} – WRAPPED.
 \end{itemize}
 
 Java typy pro parametry in, in/out, out a návratové typy jsou mapovány na XML Schema typy
@@ -881,15 +888,16 @@ Resource metoda může vracet návratový typ void, Response, GenericEntity nebo
 typ. Tyto typy jsou mapovány do těla odpovědi následovně:
 
 \begin{itemize}
-  \item Void – prázdné tělo odpovědi se status kódem 204.
-  \item Response – tělo odpovědi je naplněno z entity property objektu typu Response se
-status kódem specifikovaným ve status property objektu typu Response. Pokud je
+  \item \textbf{\textit{Void}} – prázdné tělo odpovědi se status kódem 204.
+  \item \textbf{\textit{Response}} – tělo odpovědi je naplněno z entity
+  property objektu typu Response se status kódem specifikovaným ve status property objektu typu Response. Pokud je
 návratová hodnota null, status kód bude 204. Při non-null entity property v Response a
 nespecifikovaném statusu je status nastaven na 200. Při null entity property je status
 nastaven na 204.
-  \item GenericEntity – tělo odpovědi je naplněno z entity property objektu typu
-GenericEntity. Při null těle odpovědi je status 204, při non-null 200.
-  \item Ostatní – tělo odpovědi je přímo mapováno z instance, která se vrací.
+  \item \textbf{\textit{GenericEntity}} – tělo odpovědi je naplněno
+  z entity property objektu typu GenericEntity. Při null těle odpovědi je status 204, při non-null 200.
+  \item \textbf{\textit{Ostatní}} – tělo odpovědi je přímo mapováno z
+  instance, která se vrací.
 Pokud je vrácena instance anonymní vnitřní třídy, je použit její předek. Při null je status 204,
 jinak 200.
 \end{itemize}
@@ -1113,19 +1121,21 @@ projektu a končí fází deployování do produkčního prostředí.
 Seznam fází defautního lifecycle:
 
 \begin{itemize}
-  \item validate – ověření, že projekt nemá žádné chyby a všechny potřebné informace jsou v
-něm dostupné,
-  \item compile – kompilování zdrojových kódů,
-  \item test – testování zkompilovaného kódu s použitím testovacího frameworku. Tyto testy
-nevyžadují, aby byl kód zabalen nebo deployován,
-  \item package – vezme zkompilovaný kód a zabalí ho do distribuovatelného formátu,
-například jako jar,
-\item integration-test – distribuce balíčku na prostředí, kde mohou proběhnout integrační
-testy, provedení testů,
-\item verify – kontroly k ověření validnosti balíčku a splnění kvality,
-\item install – instalace balíčku do lokální repository k použití v jiných projektech,
-\item deploy – v integračním nebo release prostředí zkopíruje balíček do vzdálené repository
-pro sdílení s ostatními projekty a vývojáři.
+  \item \textbf{\textit{validate}} – ověření, že projekt nemá žádné
+  chyby a všechny potřebné informace jsou v něm dostupné,
+  \item \textbf{\textit{compile}} – kompilování zdrojových kódů,
+  \item \textbf{\textit{test}} – testování zkompilovaného kódu s použitím
+  testovacího frameworku. Tyto testy nevyžadují, aby byl kód zabalen nebo deployován,
+  \item \textbf{\textit{package}} – vezme zkompilovaný kód a zabalí ho do
+  distribuovatelného formátu, například jako jar,
+\item \textbf{\textit{integration-test}} – distribuce balíčku na
+prostředí, kde mohou proběhnout integrační testy, provedení testů,
+\item \textbf{\textit{verify}} – kontroly k ověření validnosti balíčku a
+splnění kvality,
+\item \textbf{\textit{install}} – instalace balíčku do lokální repository
+k použití v jiných projektech,
+\item \textbf{\textit{deploy}} – v integračním nebo release prostředí
+zkopíruje balíček do vzdálené repository pro sdílení s ostatními projekty a vývojáři.
 \end{itemize}
 
 Seznam fází není kompletní a může se rozrůst. Pokud chceme projekt dostat do určité fáze
@@ -1644,7 +1654,7 @@ určité URI atd. V budoucnu by jako rozšíření nástroje mohl k těmto typů
 typ. Tento univerzální model by měl být schopný pojmout nový typ s minimem rozšíření,
 kterým může být například podpora JMS (Java Message Service).
 
-API model
+\textbf{\textit{API model}}
 
 \begin{itemize}
   \item základní URI pro skupinu služeb - povinné
@@ -1652,7 +1662,7 @@ API model
   \item seznam služeb
 \end{itemize}
 
-Služba
+\textbf{\textit{Služba}}
 
 \begin{itemize}
   \item identifikátor služby (path pro REST, service name pro WS) - povinné
@@ -1660,7 +1670,7 @@ Služba
   \item seznam metod
 \end{itemize}
 
-Metoda
+\textbf{\textit{Metoda}}
 
 \begin{itemize}
   \item path metody (pro REST) - povinné
@@ -1675,7 +1685,7 @@ Metoda
   \item seznam možností odpovědí
 \end{itemize}
 
-Http parametr
+\textbf{\textit{HTTP parametr}}
 
 \begin{itemize}
   \item název parametru - povinné
@@ -1686,14 +1696,14 @@ Http parametr
 povolených hodnot
 \end{itemize}
 
-Transportní typ
+\textbf{\textit{Transportní typ}}
 
 \begin{itemize}
   \item popis typu
   \item datový typ - povinné
 \end{itemize}
 
-Odpověď
+\textbf{\textit{Odpověď}}
 
 \begin{itemize}
   \item http status – povinné
@@ -1732,7 +1742,7 @@ specifikacemi.
 
 \subsubsection{Analýza modelu}
 
-Skupiny služeb
+\textbf{\textit{Skupiny služeb}}
 
 V modelu budou služby shlukovány do skupin podle shodného URI prefixu. Například jedna
 skupina služeb může mít prefix http://localhost:8080/exampleapp/rest a
@@ -1743,7 +1753,7 @@ třída. Spojením URI prefixu a path root resource třídy se získá URI dostu
 služeb je jednoznačným identifikátorem service name popsané v Web Service endpoint
 implementation.
 
-Popis
+\textbf{\textit{Popis}}
 
 Jedná se o různé popisy jako jsou:
 
@@ -1767,7 +1777,7 @@ Popis bude moci být volitelně definován pro položku modelu a bude získává
 pluginu v pom.xml a z introspekce kódu, kde bude v podobě anotací. Umístění popisu je
 určeno tím, ke které položce je popis určen.
 
-Metoda
+\textbf{\textit{Metoda}}
 
 REST metoda je jednoznačně identifikovaná v rámci služby svou path a typem http metody.
 Pokud se jedná o metodu služby WS, je metoda jednoznačně identifikovaná svým názvem.
@@ -1900,14 +1910,14 @@ Při běhu operace budou moci vznikat chyby, které budou propagovány ven z ope
 budou rozděleny do čtyř kategorií:
 
 \begin{itemize}
-  \item STOP\_HANDLER\_CURRENT – ukončí se právě zpracovávaná operace a přejde
+  \item \textbf{\textit{STOP\_HANDLER\_CURRENT}} – ukončí se právě zpracovávaná operace a přejde
   se na vykonání další, pokud je nakonfigurována,
-  \item STOP\_HANDLERS – ukončí se právě zpracovávaná operace, ostatní 
-  nakonfigurované operace se přeskočí a přejde se ke generování modelu do souboru,
-  \item FAILURE\_EXCEPTION – bude vyhozena výjimka MojoFailureException, její
-význam popsán v ...
-  \item EXECUTION\_EXCEPTION – bude vyhozena výjimka MojoExecutionException,
-  její význam popsán v ...
+  \item \textbf{\textit{STOP\_HANDLERS}} – ukončí se právě
+  zpracovávaná operace, ostatní nakonfigurované operace se přeskočí a přejde se ke generování modelu do souboru,
+  \item \textbf{\textit{FAILURE\_EXCEPTION}} – bude
+  vyhozena výjimka MojoFailureException, její význam popsán v ...
+  \item \textbf{\textit{EXECUTION\_EXCEPTION}} – bude
+  vyhozena výjimka MojoExecutionException, její význam popsán v ...
 \end{itemize}
 
 \subsection{GUI klient}
@@ -1967,26 +1977,26 @@ a vytvoří instanci Maven REST Adapter.
 \end{center}
 \end{figure}
 
-Maven REST Adapter
+\textbf{\textit{Maven REST Adapter}}
 
 Komponenta sloužící jako wrapper pro předání řízení komponentě REST API Introspector.
 Jedná se o návrhový vzor adapter, který zde slouží pro oddělení Maven API od funkcionality
 pluginu. V budoucnu se může přidat adapter pro jiný buildovací nástroj než je Maven a
 nebude nutné dělat žádný zásah do stávajícího zdrojového kódu.
 
-Resource Class Processor
+\textbf{\textit{Resource Class Processor}}
 
 Komponenta provádějící introspekci REST API a JRAPIDoc anotací. Při introspekci jsou za
 pomocí komponenty Model Builder vytvářeny části modelu, ze kterých se postupně tvoří
 výsledný model.
 
-Model Builder
+\textbf{\textit{Model Builder}}
 
 Komponenta budující model. Komponenta obsahuje doménové třídy reprezentující model a
 ke každé doménové třídě odpovídající builder třídu, která usnadňuje vytváření. Pro builder
 třídy je použit návrhový vzor builder.
 
-Type Provider
+\textbf{\textit{Type Provider}}
 
 Tato komponenta se stará o zanesení informací o transportních typech do modelu. Řeší
 problematiku popsanou v 2.4.3.3. Pomocí tovární metody je prováděna instanciace
@@ -1995,14 +2005,14 @@ provider obsahuje cache, kde uchovává již prozkoumané typy, aby se nemusely 
 prohledávat. Cache také slouží jako úplný seznam typů, které se nakonec zakomponují do
 modelu.
 
-Model Handler
+\textbf{\textit{Model Handler}}
 
 Uvnitř této komponenty se provádějí operace nad modelem definované v 2.4.3.4. Obsahuje
 factory metodu provádějící instanciování nakonfigurovaných handlerů, které obsahují
 naprogramované chování pro zpracování modelu. V komponentě jsou tyto handlery vykonány
 a je zde i zpracování chyb vyskytujících se během provádění handlerů.
 
-Model Generátor
+\textbf{\textit{Model Generátor}}
 
 Komponenta zodpovědná za vygenerování předaného modelu do souboru. Obsahuje také
 konfiguraci způsobu serializace modelu.
@@ -2023,16 +2033,16 @@ přehlednosti vytvářeny komponenty a bude mezi ně rozdělena zodpovědnost.
 
 Význam a odpovědnost jednotlivých komponent:
 
-API Model
+\textbf{\textit{API Model}}
 
 Komponenta zodpovědná za načtení modelu ze souboru a jeho uložení v ní.
 
-View
+\textbf{\textit{View}}
 
 Komponenta zodpovědná za zobrazování dat uživateli na obrazovce. Bude zobrazovat
 grafickou podobu modelu, vyskytující se chyby (například při načítání modelu) apod.
 
-Controller
+\textbf{\textit{Controller}}
 
 Komponenta zodpovědná za inicializaci view i modelu. Obsahuje události vzniklé ve view a
 funkcionalitu pro zaregistrování těchto událostí.
@@ -2054,7 +2064,7 @@ která jej bude vytvářet.
 
 Popis tříd reprezentujících model:
 
-APIModel
+\textbf{\textit{APIModel}}
 
 Hlavní kořenová třída obsahující tři hlavní atributy. První atribut customInfo reprezentuje
 přídavné informace obdržené z konfigurace pluginu. Položky jsou vždy párové textové
@@ -2063,16 +2073,16 @@ podle společné URI. Posledním atributem je seznam transportních typů ze vš
 služeb. Typy jsou zde vytvořeny na základě rekurzivního procházení každého typu a jeho
 atributů.
 
-ServiceGroup
+\textbf{\textit{ServiceGroup}}
 
 Třída reprezentující skupinu služeb se stejným URI prefixem.
 
-Service
+\textbf{\textit{Service}}Service
 
 Třída reprezentující kořenovou resource třídu (JAX-RS) nebo SEI (JAX-WS), která obsahuje
 seznam svých metod.
 
-Method
+\textbf{\textit{Method}}
 
 V JAX-RS kontextu třída reprezentuje jak resource metody kořenové resource třídy, tak i
 rekurzivně obsažené metody resource tříd vrácených sub-resource lokátorem (podrobnosti v
@@ -2081,21 +2091,21 @@ parametrů (JAX-RS může mít vždy jen jeden parametr). Při užití v JAX-WS 
 seznam vstupních SOAP hlaviček a seznam možností odpovědí. Seznam může být prázdný,
 pokud je metoda JAX-WS jednosměrná.
 
-SoapBinding
+\textbf{\textit{SoapBinding}}
 
 Třída nesoucí informace o způsobu serializování zpráv v kontextu JAX-WS.
 
-Return
+\textbf{\textit{Return}}
 
 Třída nereprezentuje návratový typ metody jak evokuje její název, ale jednu možnou
 odpověď, jakou může metoda vrátit. Odpověď se skládá z http statusu, návratových typů,
 návratových typů SOAP hlaviček, seznamu http hlaviček a seznamu http cookie.
 
-TransportType
+\textbf{\textit{TransportType}}
 
 Třída reprezentující transportní typ. Jejími atributy jsou popis transportního typu a datový typ
 vytvořený type providerem (podrobněji v 2.4.3.3).
-
+\mbox{}\\
 Návrh datových typů pro model znázorňuje diagram tříd 8. Návrh obsahuje tři možné typy:
 
 \begin{figure}[h]
@@ -2106,19 +2116,19 @@ Návrh datových typů pro model znázorňuje diagram tříd 8. Návrh obsahuje 
 \end{center}
 \end{figure}
 
-CollectionTypeModel
+\textbf{\textit{CollectionTypeModel}}
 
 Datový typ vycházející z Javovských kolekcí a polí. Obsahuje atribut nesoucí odkaz na typ,
 jež je možné do kolekce či pole vložit. Může odkazovat na jakýkoliv typ, který je potomkem
 třídy TypeModel.
 
-MapTypeModel
+\textbf{\textit{MapTypeModel}}
 
 Třída reprezentující Javovský datový typ Map<K, V>. Její atributy odkazují na datové typy,
 jež reprezentují klíče a hodnoty, které mohou být do mapy vloženy. Mohou odkazovat na
 jakýkoliv typ, který je potomkem třídy TypeModel.
 
-CustomTypeModel
+\textbf{\textit{CustomTypeModel}}
 
 Třída reprezentuje datový typ běžných typů v Javě. Zahrnuje jak primitivní datové, tak i
 objektové typy. Bude obsahovat všechny ostatní Javovské typy, které nepatří do skupin výše
@@ -2128,7 +2138,7 @@ zmíněných.
 
 Tato kapitola obsahuje popsané návrhové vzory jenž jsou použity v nástroji.
 
-Factory method
+\textbf{\textit{Factory method}}
 
 \begin{figure}[h]
 \begin{center}
@@ -2146,7 +2156,7 @@ protože tovární metoda vrací instance tříd mající stejný nadtyp. Vzor t
 metoda je v nástroji použit v komponentách Model Handler a Type Provider 
 popsaných v 3.1.1.
 
-Builder
+\textbf{\textit{Builder}}
 
 \begin{figure}[h]
 \begin{center}
@@ -2166,7 +2176,7 @@ zavolá na builder objektu metodu build, která vrátí vytvořený objekt. Vzor
 builder je použit pro tvorbu modelu a rekurzivně pro všechny jeho části. 
 Model se nachází v komponentě Model Builder popsané v 3.1.1.
 
-Adapter
+\textbf{\textit{Adapter}}
 
 \begin{figure}[h]
 \begin{center}
@@ -2190,44 +2200,28 @@ komunikovat.
 
 \section{Použité technologie}
 
-Java 6.0
+Pro vývoj nástroje byly použity následující technologie:
+\begin{description}
+\item[Java 6.0] - Vyvíjený nástroj byl vyvíjen a kompilován do Java
+verze 6.0.
+\item[JAX-WS 2.0]- Nástroj při vytváření modelu analyzuje kód JAX-WS
+specifikace ve verzi 2.0.
+\item[JAX-RS 2.0] - Nástroj při vytváření modelu analyzuje kód JAX-RS
+specifikace ve verzi 2.0.
+\item[Apache Maven 3.3.1] - Maven pluginy v nástroji byly vyvíjeny na
+verzích knihoven 3.3.1.
+\item[Reflections 0.9.9-RC2] - Pro analýzu bytecode a vyhledání
+anotovaných tříd bylo použito Reflections ve verzi 0.9.9- RC2.
+\item[Java Reflection API] - Při analýze kódu bylo využito rozhraní
+Java Reflection API, jehož verze je vázaná k verzi Javy.
+\item[Jackson 2.5.0] - Knihovna ve verzi 2.5.0 použitá pro tvorbu
+transportních typů.
+\item[JUnit 4.11] - Nástroj byl testován jednotkovými testy s
+použitím frameworku JUnit ve verzi 4.11.
+\item[Json2html] - JavaScriptová knihovna zodpovědná za transformaci
+modelu v JSON formátu do HTML. Transformace je prováděna na základě vytvoření šablony a její aplikace na JSON objekt.
+\end{description}
 
-Vyvíjený nástroj byl vyvíjen a kompilován do Java verze 6.0.
-
-JAX-WS 2.0
-
-Nástroj při vytváření modelu analyzuje kód JAX-WS specifikace ve verzi 2.0.
-
-JAX-RS 2.0
-
-Nástroj při vytváření modelu analyzuje kód JAX-RS specifikace ve verzi 2.0.
-
-Apache Maven 3.3.1
-
-Maven pluginy v nástroji byly vyvíjeny na verzích knihoven 3.3.1.
-
-Reflections 0.9.9-RC2
-
-Pro analýzu bytecode a vyhledání anotovaných tříd bylo použito Reflections ve verzi 0.9.9-
-RC2.
-
-Java Reflection API
-
-Při analýze kódu bylo využito rozhraní Java Reflection API, jehož verze je vázaná k verzi
-Javy.
-
-Jackson 2.5.0
-
-Knihovna ve verzi 2.5.0 použitá pro tvorbu transportních typů.
-
-JUnit 4.11
-
-Nástroj byl testován jednotkovými testy s použitím frameworku JUnit ve verzi 4.11.
-
-Json2html
-
-JavaScriptová knihovna zodpovědná za transformaci modelu v JSON formátu do HTML.
-Transformace je prováděna na základě vytvoření šablony a její aplikace na JSON objekt.
 
 \section{Vyhledávání JAX-WS a JAX-RS API}
 
@@ -2263,37 +2257,45 @@ nepřehlednému anotování částí rozhraní. Vznikl proto kompromis, který j
 intuitivní a zároveň dokáže pokrýt většinu požadavků na tvorbu dokumentace.
 
 Nově vzniklé anotace:
-
-@org.jrapidoc.annotation.DocDescription
+\mbox{}\\
+\mbox{}\\
+\textbf{\textit{@org.jrapidoc.annotation.DocDescription}}
 
 Přidává popis k elementům rozhraní.
-
-@org.jrapidoc.annotation.rest.DocIsRequired
+\mbox{}\\
+\mbox{}\\
+\textbf{\textit{@org.jrapidoc.annotation.rest.DocIsRequired}}
 
 Indikuje zda je parametr či atribut povinný.
-
-@org.jrapidoc.annotation.rest.DocPathExample
+\mbox{}\\
+\mbox{}\\
+\textbf{\textit{@org.jrapidoc.annotation.rest.DocPathExample}}
 
 Protože v anotaci @Path mohou být regulární výrazy, které nemusejí být dobře čitelné, lze v
 této anotaci uložit ukázku URI vyhovující regulárnímu výrazu.
-
-@org.jrapidoc.annotation.rest.DocReturn
+\mbox{}\\
+\mbox{}\\
+\textbf{\textit{@org.jrapidoc.annotation.rest.DocReturn}}
 
 Anotace slouží k tvorbě možnosti odpovědi a je vytvořena především pro situace, kdy je
 návratovým typem Response, ze kterého nelze při statické analýze získat žádné informace.
-
-@org.jrapidoc.annotation.rest.DocReturns
+\mbox{}\\
+\mbox{}\\
+\textbf{\textit{@org.jrapidoc.annotation.rest.DocReturns}}
 
 Při více možnostech odpovědí lze možnosti vložit do této anotace.
-
-@org.jrapidoc.annotation.soap.DocReturn
+\mbox{}\\
+\mbox{}\\
+\textbf{\textit{@org.jrapidoc.annotation.soap.DocReturn}}
 
 Pomáhá lépe zdokumentovat možnosti odpovědi.
-
-@org.jrapidoc.annotation.soap.DocReturns
+\mbox{}\\
+\mbox{}\\
+\textbf{\textit{@org.jrapidoc.annotation.soap.DocReturns}}
 
 Při více možnostech odpovědí lze možnosti vložit do této anotace.
-
+\mbox{}\\
+\mbox{}\\
 Další podrobnosti o přídavných anotacích lze nalézt v javadoc.
 
 \section{Tvorba transportních typů}
@@ -2345,27 +2347,27 @@ společnosti.
 
 \section{Testování použitelnosti}
 
-Cílová skupina
+\textbf{\textit{Cílová skupina}}
 
 Znalost tvorby REST nebo WS na platformě JEE? Ano
 Zkušenost s projekty spravovaném pomocí Maven? Ano
 Zkušenost s přidáváním Maven pluginů do životního cyklu buildu? Ano
 
-Cíle testování
+\textbf{\textit{Cíle testování}}
 
-Intuitivnost
+\textit{Intuitivnost}
 
 Jedním z cílů testování je zjištění, jak je používání nástroje intuitivní. Uživatelé by neměli být
 vystaveni neintuitivní konfiguraci. Naopak nástroj by měl mít možnost být spuštěn s
 minimální konfigurací. Bude testováno, jak respondent využije pomocných funkcí a jestli mu
 byly nápomocné. Pomocnými funkcemi je help goal v pluginu a javadoc rozhraní nástroje.
 
-Přehlednost
+\textit{Přehlednost}
 
 Jelikož je nástroj možné různě rozšířit, bude testováno jestli se respondent bude v možnostech
 rozšíření orientovat a podaří se mu takové rozšíření provést.
 
-Provedení testů
+\textit{Provedení testů}
 
 Před provedením testů bude respondent seznámen se základními principy fungování nástroje a
 poté mu budou předány scénáře pro provedení uživatelských akcí a adresář s klientem. Po
@@ -2492,7 +2494,7 @@ Nástroj Swagger po úspěšné konfiguraci a následném pokusu o vygenerován�
 dokumentace nic nevygeneruje. Swagger tvoří model jen u tříd a metod, které
 jsou anotovány jeho přídavnými anotacemi. U tříd a metod je vždy nutné
 duplikovat hodnotu z JAX-RS anotace @Path do anotace Swaggeru. Takové řešení je
-problematické, když není možná úprava zdrojového kódu tříd rozhraní. To může
+problematické, když nemůžeme upravovat zdrojový kód tříd rozhraní. To může
 nastat, pokud jsou třídy do projektu přidány jako knihovny. S touto vlastností
 Swaggeru je spojena ještě jedna nevýhoda. Tou je nutnost modifikace kódu při změně seznamu
 dokumentovaných tříd. JRAPIDoc je flexibilnější, po nakonfigurování pluginu automaticky vyhledá třídy rozhraní.
@@ -2524,10 +2526,10 @@ není korektní. JRAPIDoc korektně vygeneruje informaci o datovém typu.
 Ve specifikaci je definováno dynamické rozhodování obsluhy požadavku a slouží
 pro to tzv. sub-resource lokátory. Podrobnější informace o sub-resource
 lokátorech jsou popsány v \ref{subsec:resource-metoda}. JRAPIDoc takové chování
-plně podporuje. Ve Swaggeru se situace liší, se sub-resource lokátory  je
-zacházeno jako by se jednalo o resource metody. Pokud jsou v rozhraní
-použity sub-resource lokátory výsledkem Swaggeru je vypsání chyby a není 
-zobrazena dokumentace ani k ostatním metodám a rozhraním.
+plně podporuje narozdíl od Swagger. Ten se k sub-resource lokátorům chová jako
+by se jednalo o resource metodu. Pokud jsou v rozhraní použity sub-resource
+lokátory výsledkem Swaggeru je vypsání chyby a není zobrazena dokumentace
+ani k ostatním metodám a rozhraním.
 
 Specifikace dovoluje nad jednou metodou užití více request method designatorů
 (anotací @GET, @POST atd\ldots). V JRAPIDoc se z jedné Java metody
@@ -2561,7 +2563,7 @@ nezobrazí vůbec žádnou dokumentaci k rozhraní.
 JAX-RS specifikuje dědičnost tříd, se vzdáleným rozhraním, algoritmem popsaným v
 \ref{subsec:dedicnost-resource-trid}. Swagger tento nevyužívá a dědičnost tříd
 ignoruje. Anotace definované v nadtřídách a interfacech jsou ignorovány. I přes
-přidání Swagger anotací do třídy předka a potomka, metoda v dokumentaci zahrnuta
+přidání Swagger anotací do třídy předka a potomka metoda v dokumentaci zahrnuta
 není. JRAPIDoc takto definovaný algoritmus pro průchod předky aplikuje při
 introspekci kódu a výsledkem je model dokumentace, který odpovídá navrženému rozhraní.
 
