@@ -1783,6 +1783,7 @@ je, že REST může přijímat http parametry (header a cookie navíc lze i odes
 nedefinuje.
 
 \subsubsection{Typový systém}
+\label{subsec:typovy-system}
 
 Ač to nemusí být na první pohled patrné, dokumentování typového systému Javy je jednou z
 nejdůležitějších částí nástroje. Jedná se o zdokumentování datových typů, které jsou určeny
@@ -1846,20 +1847,35 @@ java.lang.reflect.ParameterizedType a java.lang.reflect.TypeVariable. Generika
 budou podporovaná jak pro vstupní, tak návratové typy metod. Budou moci být 
 dokumentovány metody s podobnou signaturou jako na ukázce 11.
 
-\begin{lstlisting}[frame=single]
-public void foo (List<String> l);
+\begin{lstlisting}[frame=single, caption={Příklad podporovaných signatur
+resource metod}, label={lst:signatury-metod}]
+public void foo1(List<String> l);
 
-public void foo (Map<String, String> m);
+public List<String> foo2();
 
-public void foo (TypeB<TypeA> t);
+public void foo3(Map<String, String> m);
 
-public <T extends TypeA> void foo (T t);
+public Map<String, String> foo4();
 
-public <T extends TypeA> void foo (List<T> t);
+public void foo5(TypeB<TypeA> d);
 
-public <T extends List<TypeA>> void foo (T t);
+public TypeB<TypeA> foo6();
 
-public <T> void foo (T t);
+public <T extends TypeA> void foo7(T t);
+
+public <T extends Destination> T foo8();
+
+public <T extends TypeA> void foo9(List<T> t);
+
+public <T extends TypeA> List<T> foo10();
+
+public <T extends List<TypeA>> void foo11(T l);
+
+public <T extends List<TypeA>> T foo12();
+
+public <T> void foo13(T t);
+
+public <T> T foo14();
 \end{lstlisting}
 
 \paragraph{Problematika v JAX-WS}
@@ -2476,7 +2492,7 @@ Nástroj Swagger po úspěšné konfiguraci a následném pokusu o vygenerován�
 dokumentace nic nevygeneruje. Swagger tvoří model jen u tříd a metod, které
 jsou anotovány jeho přídavnými anotacemi. U tříd a metod je vždy nutné
 duplikovat hodnotu z JAX-RS anotace @Path do anotace Swaggeru. Takové řešení je
-problematické, když nemůžeme upravovat zdrojový kód tříd rozhraní. To může
+problematické, když není možná úprava zdrojového kódu tříd rozhraní. To může
 nastat, pokud jsou třídy do projektu přidány jako knihovny. S touto vlastností
 Swaggeru je spojena ještě jedna nevýhoda. Tou je nutnost modifikace kódu při změně seznamu
 dokumentovaných tříd. JRAPIDoc je flexibilnější, po nakonfigurování pluginu automaticky vyhledá třídy rozhraní.
@@ -2485,6 +2501,8 @@ dokumentovat nechceme. Taková funkčnost je řešena za pomocí konfigurace, ve
 které se vydefinuje seznam tříd k vynechání. Pokud nastane situace, kdy v jednom
 buildu je nutné vygenerovat více než jednu dokumentaci, se Swaggerem se to
 nepodaří, protože je vždy nutný zásah do zdrojového kódu.
+
+\subsection{HTTP parametry}
 
 Pokud jsou v třídě rozhraní přítomny atributy, které jsou anotovány pomocí 
 @MatrixParam, @CookieParam a @FormParam, Swagger je v dokumentaci
@@ -2501,126 +2519,94 @@ typ String a ne ten, který vznikne transformací v runtime.
 Swagger ovšem do dokumentace vygeneruje datové typy až po převodu ze String, což
 není korektní. JRAPIDoc korektně vygeneruje informaci o datovém typu.
 
+\subsection{Metody}
+
 Ve specifikaci je definováno dynamické rozhodování obsluhy požadavku a slouží
 pro to tzv. sub-resource lokátory. Podrobnější informace o sub-resource
 lokátorech jsou popsány v \ref{subsec:resource-metoda}. JRAPIDoc takové chování
-plně podporuje narozdíl od Swagger. Ten se k sub-resource lokátorům chová jako
-by se jednalo o resource metodu. Pokud jsou v rozhraní použity sub-resource
-lokátory výsledkem Swaggeru je vypsání chyby a není zobrazena dokumentace
-ani k ostatním metodám a rozhraním.
+plně podporuje. Ve Swaggeru se situace liší, se sub-resource lokátory  je
+zacházeno jako by se jednalo o resource metody. Pokud jsou v rozhraní
+použity sub-resource lokátory výsledkem Swaggeru je vypsání chyby a není 
+zobrazena dokumentace ani k ostatním metodám a rozhraním.
+
+Specifikace dovoluje nad jednou metodou užití více request method designatorů
+(anotací @GET, @POST atd\ldots). V JRAPIDoc se z jedné Java metody
+vytvoří pro každý její designator jedna metoda v dokumentaci. Vznikne tak vícero
+totožných metod s rozdílným typem HTTP metody. Při generování pomocí Swagger je
+vytvořena pouze jedna metoda odpovídající jednomu typu HTTP metody, druhý a další 
+request method designator jsou ignorováni.
+
+Je také možné vydefinovat si vlastní request method designator, který bude
+reprezentovat nový typ HTTP metody. Tahle funkčnost se může využít pokud ani
+jedna ze standardních HTTP metod není vyhovující. Na \ref{lst:vlastni-designator} je ukázka jak
+lze vytvořit vlastní designator, který má úplně stejné zacházení a vlastnosti
+jako ty zabudované. 
+
+\begin{lstlisting}[frame=single, caption={Vlastní request method
+designator},label={lst:vlastni-designator}] 
+@Target({ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@HttpMethod("CUSTOM")
+public @interface CUSTOM {
+}
+\end{lstlisting}
+
+JRAPIDoc podporuje vlastní request method designatory a zanese vlastní typ HTTP
+metody korektně do dokumentace narozdíl od Swagger. Ten po vytvoření a načtení
+dokumentace skončí chybou oznamující, že metoda nemá nastavený typ HTTP metody a
+nezobrazí vůbec žádnou dokumentaci k rozhraní.
+
+\subsection{Dědičnost tříd vzdáleného rozhraní}
 
 JAX-RS specifikuje dědičnost tříd, se vzdáleným rozhraním, algoritmem popsaným v
 \ref{subsec:dedicnost-resource-trid}. Swagger tento nevyužívá a dědičnost tříd
 ignoruje. Anotace definované v nadtřídách a interfacech jsou ignorovány. I přes
-přidání Swagger anotací do třídy předka a potomka metoda v dokumentaci zahrnuta
+přidání Swagger anotací do třídy předka a potomka, metoda v dokumentaci zahrnuta
 není. JRAPIDoc takto definovaný algoritmus pro průchod předky aplikuje při
 introspekci kódu a výsledkem je model dokumentace, který odpovídá navrženému rozhraní.
 
+\section{Transportní typy}
+
+Detailní informace o transportních typech lze nalézt v
+\ref{subsec:typovy-system}.
+Zde je popsáno porovnání nástrojů při užití různých datových typů pro
+parametry a návratové hodnoty metod jako na \ref{lst:signatury-metod}. Pokud nejsou k
+metodám a jejím parametrům přidány přídavné anotace Swaggeru ani JRAPIDoc,
+výsledky se až na metodu foo7 liší. Swagger bez přídavných anotací vůbec
+nevygeneruje žádné informace o typech zasílaných v odpovědích. U ostatních metod generuje
+naprosto nerelevantní informace. Konkrétně pro metodu 
+public <T extends List<TypeA>> void foo11(T l) je jako parametr uvedeno
+List\{empty\}, zatímco JRAPIDoc uvádí ve své dokumentaci
+array<org.example.TypeA> což je správně.
+
+JRAPIDoc podporuje různé type providery, což mu dává flexibilitu při
+dokumentování transportních typů (viz \ref{subsec:typovy-system}). Při tvorbě
+dokumentace se berou v potaz anotace zanesené v třídách z analyzovaných typů. Tyto anotace mohou být z
+knihovny Jackson a JAXB. Pomocí konfigurace lze nastavit, které anotace
+aplikovat. Existuje i možnost přidat vlastního type providera, který bude
+nahrazen za zabudované a tím tvořit transportní typy jiným způsobem. 
+U Swagger se nepodařilo zjistit, zda má podobnou funkčnost jako JRAPIDoc, ale
+defaultně aplikuje anotace jak Jackson tak i JAXB současně.
 
 
 
 
 
 
+\section{Podpora JAX-WS API}
+
+
+
+\section{Shrnutí}
 
 V kontextu SOAP webových služeb na platformě Java EE se nepodařilo najít alternativu pro
 srovnání nástroje. Výsledkem této práce je tak pravděpodobně první nástroj svého druhu,
 který v sobě obsahuje možnost tvorby dokumentace pro WS. Tvorba dokumentace pro REST
 i WS při použití jednoho nástroje má tu výhodu, že dokumentace je sjednocená jak po
 grafické, tak po obsahové stránce.
-a
 
-a
+Potenciál
 
-aa
-
-a
-
-aa
-
-a
-
-aa
-
-a
-
-aa
-
-a
-
-aa
-
-a
-
-aa
-
-a
-
-aa
-
-a
-
-aa
-
-a
-
-aa
-
-a
-
-aa
-
-a
-
-aa
-
-a
-
-aa
-
-a
-
-aa
-
-a
-
-aa
-
-a
-
-aa
-
-a
-
-aa
-
-a
-
-aa
-
-a
-
-aa
-
-a
-
-aa
-
-a
-
-aa
-
-a
-
-aa
-
-a
-
-aa
-
-a
-
-a
 
 \chapter{Budoucí práce}
 
