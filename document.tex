@@ -53,9 +53,35 @@
 
 \usepackage{enumerate}
 \usepackage{listings}
+% \lstset{language=java,
+% numberstyle=\footnotesize,
+% basicstyle=\footnotesize,
+% basicstyle=\ttfamily,
+% numbers=left,
+% stepnumber=1,
+% frame=shadowbox,
+% breaklines=true}
+
+\lstset{
+           basicstyle=\scriptsize\ttfamily,
+           numberstyle=\footnotesize,
+           numbers=left,
+           stepnumber=1,
+%            frame=shadowbox,
+%            breaklines=true
+          }
+
 \usepackage{eurosym}
 \usepackage{array}
 \usepackage[export]{adjustbox}
+\usepackage[usenames, dvipsnames]{xcolor}
+
+\lstnewenvironment{code}[1][]%
+  {\noindent\minipage{\linewidth}\medskip 
+   \lstset{basicstyle=\ttfamily\footnotesize,frame=single,#1}}
+  {\endminipage}
+  
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Zvolte jednu z moznosti 
@@ -120,6 +146,7 @@ urlcolor=red,
 citecolor=blue,
 linkcolor=blue,
 unicode=true,
+hidelinks
 ]
 {hyperref}
 
@@ -211,7 +238,12 @@ unicode=true,
 
 \acknowledgements
 \noindent
-Zde můžete napsat své poděkování, pokud chcete a máte komu děkovat.
+Velmi rád bych poděkoval svým rodičům za podporu při studiích a důvěru ve mě.
+Velký dík posílám také přítelkyni Veronice. 
+
+Dále bych rád poděkoval Mgr.
+Ivu Bekovi a Ing. Tomáši Černému, MSc. za připomínky a odborné rady při tvorbě
+této práce.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%   Prohlaseni / Declaration 
@@ -224,19 +256,35 @@ Zde můžete napsat své poděkování, pokud chcete a máte komu děkovat.
  
 \abstractpage
 
-Translation of Czech abstract into English.
+With the increasing number of software products, which have a need to be
+integrated in between themselves, a big pressure developed with interface
+unification. Therefore a row of protocols and technologies was developed, which
+brings rules into system integration and aproaches, which designate how the
+remote communication between system should work and how to create providers and
+clients of such interfaces.
+If there is a required documentation for an interface, which enables the
+consumer to obtain all needed information about the interface, it is fairly easy
+to realize the integration. In reversed case incomplete, nonactual or otherwise
+insufficient documentation can lead to growth of needed funds for the
+realization of integration.
+
+The aim of the thesis is to analyze the requirements of the documentation and to
+develop a tool for automatic generation of actual documentation of remote
+interfaces. With the usage of the tool there will be a decrease of needed funds
+for the development of the documentation and for the realization of the system
+integration.
 
 % Prace v cestine musi krome abstraktu v anglictine obsahovat i
 % abstrakt v cestine.
-\vglue60mm
+\vglue35mm
 
 \noindent{\Huge \textbf{Abstrakt}}
 \vskip 2.75\baselineskip
 % \noindent
 S narůstajícím počtem softwarových produktů, které mají potřebu být mezi sebou vzájemně
 integrovány vznikl velký tlak na unifikaci rozhraní. Byla proto vytvořena řada protokolů a
-technologií, které přinášejí do systémové integrace pravidla a postupy určující jak probíhá
-vzdálená komunikace mezi systémy a jak tvořit poskytovatele a klienty takových rozhraní.
+technologií, které přinášejí do systémové integrace pravidla a postupy určující,
+jak probíhá vzdálená komunikace mezi systémy a jak tvořit poskytovatele a klienty takových rozhraní.
 Pokud existuje k vystavenému rozhraní odpovídající dokumentace, která umožní
 konzumentovi poskytnout všechny potřebné informace o rozhraní, lze poměrně rychle a
 jednoduše provést integraci. V opačném případě nekompletní, neaktuální či jinak
@@ -304,25 +352,27 @@ První počátky integrace sahají do roku 1980, kdy vznikla myšlenka tzv. digi
 byla aplikována v továrnách. V devadesátých letech společnosti nakupovaly softwarová řešení
 jako je SAP, Oracle ERP, Siebel a další. Tato řešení fungovala dobře jako samostatný
 software, vytvořily se kolem nich takzvané informační ostrovy. Ve většině případů každé
-řešení produkovalo redundantní data. Ve výsledku při vzniklé změně dat musely být ručně
-změněny i v ostatních systémech. Takové řešení bylo těžkopádné a musela přijít změna. Tyto
-problémy daly vzniknout rozmachu integrace mezi systémy.
+řešení produkovalo redundantní data. Ve výsledku, při vzniklé změně dat, musela
+být redundantní data ručně změněna i v ostatních systémech. Takové řešení bylo
+těžkopádné a musela přijít změna. Tyto problémy daly vzniknout rozmachu integrace mezi systémy.
 
 Komunikace mezi komponentami byla často platformově závislá a používaly se pro ni
 proprietární protokoly. Postupem času, jak šly informační technologie dopředu a sílil tlak na
 vznik technologií umožňujících platformovou nezávislost s otevřenými protokoly pro
-komunikaci, jsme ve stavu, kdy máme technologie a standardizované protokoly. S jejich
-pomocí vznikají unifikovaná rozhraní systémů, která zjednodušují realizování integrace mezi
+komunikaci, jsme se dostali stavu, kdy máme technologie a standardizované
+protokoly.
+S jejich pomocí vznikají unifikovaná rozhraní systémů, která zjednodušují realizování integrace mezi
 softwarovými komponentami.
 
-Protokoly definují jak probíhá komunikace, technologie definují jak vytvářet rozhraní a
-klienty k nim, opomíjí se však tvorba, obsah a umístění dokumentace. Přestože poskytovatelé
-rozhraní používají jednotné protokoly a technologie, dokumentaci má každý trochu jinou.
+Protokoly definují, jak probíhá komunikace a technologie definují, jak vytvářet
+rozhraní a klienty k nim, opomíjí se však tvorba, obsah a umístění dokumentace. Přestože poskytovatelé
+rozhraní používají jednotné protokoly a technologie, dokumentaci má každý mírně
+odlišnou.
 Momentálně se můžeme setkat nejčastěji s dokumentací v HTML, dokumentech
 kancelářských balíků či PDF dokumentech. Taková dokumentace je tvořena ručně a má řadu
 nevýhod. Při její tvorbě může být zanesena chyba, dokumentace nemusí být aktuální a nemusí
-odpovídat popisovanému rozhraní. Dále usí existovat člověk, který bude za dokumentaci
-zodpovědný. Provádět integraci se systémem mající neodpovídající dokumentaci může
+odpovídat popisovanému rozhraní. Dále musí existovat člověk, který bude za
+dokumentaci zodpovědný. Provádět integraci se systémem mající neodpovídající dokumentaci může
 prodloužit dobu integrace a tím vzrostou náklady.
 
 Cílem diplomové práce je navrhnout, implementovat a otestovat nástroj pro automatické
@@ -332,19 +382,19 @@ aby se dokumentace aktualizovala vždy se změnou rozhraní.
 
 \chapter{Analýza}
 \section{Specifikace technologií pro vzdálená rozhraní}
-Způsobů jak na platformě Java EE vzdáleně komunikovat mezi systémy přes
-počítačovou síť je několik. V současné době se pro integraci nejvíce používají
+Způsobů, jak na platformě Java EE vzdáleně komunikovat mezi systémy přes
+počítačovou síť, je několik. V současné době se pro integraci nejvíce používají
 webové služby založené na SOAP zprávách a také služby založené na architektonickém stylu
 REST. Dalšími způsoby vzdálené komunikace jsou například JMS, RMI nebo CORBA.
 Tato práce se zabývá prvními dvěmi zmíněnými.
 
 \subsection{SOAP-based webová služba}
 
-SOAP-based webové služby \cite{Kalin13} je způsob komunikace mezi počítači. Komunikace,
-struktura zpráv, popis služeb a registr těchto služeb jsou řízeny otevřenými protokoly, které se
+SOAP-based webová služba \cite{Kalin13} je způsob komunikace mezi počítači.
+Komunikace, struktura zpráv, popis služeb a registr těchto služeb jsou řízeny otevřenými protokoly, které se
 neustále vyvýjejí. Díky otevřenosti jsou SOAP-based webové služby platformově
 nezávislé. Technologie užívané v SOAP-based webových službách v této práci
-podléhají těmto verzím:
+podléhají následujícím verzím:
 
 \begin{itemize}
  \item XML 1.0
@@ -359,7 +409,7 @@ dalších. Pro SOAP-based webové služby jsou definovány čtyři hlavní proto
 
 Přes transportní protokol jsou posílány zprávy po síti. Jako transportní
 protokol se nejčastěji využívá HTTP, SMTP a FTP. V prostředí jazyka Java lze
-použít i JMS, což je API pro posílání zpráv. Tohle API nemá pevně definován WP,
+použít i JMS, což je API pro posílání zpráv. Toto API nemá pevně definován WP,
 který je zodpovědný za přenos zpráv, ale je možné si zvolit mezi různými
 protokoly od různých implementací JMS. JMS nařizuje, aby různé implementace
 dokázaly mezi sebou komunikovat. Praxe však ukazuje, že ne všechny jsou mezi
@@ -444,8 +494,8 @@ elementy. Části elementu message se budou skládat z datových typů definovan
 
   \begin{itemize}
     \item \textit{Operation} - přímý potomek elementu portType,
-    který lze přirovnat k metodě v klasických programovacích jazycích jako je například Java či C. V tomto
-elementu je definováno jméno metody, input message, output message a fault.
+    který lze přirovnat k metodě v klasických programovacích jazycích, jako je
+    například Java či C. V tomto elementu je definováno jméno metody, input message, output message a fault.
 Části input, output a fault se odkazují na definice v elementech message.
 
   \end{itemize}
@@ -519,14 +569,14 @@ je, že mohou být nahrazeni za jiné klienty nebo servery.
 
 \item \textbf{\textit{Bezstavová komunikace}}
 
-Veškerý stav, ve kterém se aplikace nachází si uchovává klient. Bezstavová aplikace se velmi
-dobře škáluje. Na druhou stranu musí každý dotaz obsahovat veškeré informace o stavu
+Veškerý stav, ve kterém se aplikace nachází, si uchovává klient. Bezstavová
+aplikace se velmi dobře škáluje. Na druhou stranu musí každý dotaz obsahovat veškeré informace o stavu
 aplikace vůči klientovi. Pokud klient poslal požadavek, který ještě nebyl vyřízen, nachází se
 klient v tzv. stavu přechodu.
 
 \item \textbf{\textit{Cache}}
 
-Stejně jako World Wide Web, klienti mohou kešovat odpovědi. Odpovědi musí být
+Stejně jako World Wide Web mohou klienti kešovat odpovědi, které musí být
 definovány jako kešovatelné nebo nekešovatelné. Dobře spravované kešování aplikace
 pomáhá k lepšímu výkonu, protože se v mnoha případech nemusí posílat požadavek až do
 aplikace na serveru.
@@ -552,7 +602,8 @@ manipulaci se zdroji. K tomuto rozhraní se vztahují následující omezení:
 	  poskytující informace a data musí být jednoznačně identifikovaný svou
 	  URI\footnote{Textový řetězec s definovanou strukturou sloužící pro přesnou
 	  specifikaci zdroje informací}.
-		\item \textit{Manipulace se zdrojem a jejich reprezentacemi} – pokud se klient nachází na nějakém zdroji, může s ním provádět operace modifikace či smazání.
+		\item \textit{Manipulace se zdrojem a jejich reprezentacemi} – pokud se klient
+		nachází na určitém zdroji, může s ním provádět operace modifikace či smazání.
 		\item \textit{Orientace na reprezentaci} – u jedné
 		URI lze nastavit, aby dokázala použít odlišné formáty dat, protože ne všechny platformy užívají stejný formát. Například webový
 prohlížeč používá HTML a JavaScript, který potřebuje JSON. Java aplikace může
@@ -570,8 +621,9 @@ Takový kód může být ve formě JavaScriptu nebo třeba Java appletu.
 REST nemá definovaný žádný protokol, avšak ve většině případů, kdy se zmiňujeme o
 RESTu, máme na mysli REST přes HTTP. Webové aplikace ve webových prohlížečích 
 využívají pouze nepatrnou část vlastností HTTP. Aplikace založené na SOAP-based
-webových službách používají HTTP protokol striktně jako transportní vrstvu
-především kvůli průchodu přes firewally a využívají tak také jen malou část HTTP.
+webových službách používají HTTP protokol striktně jako transportní vrstvu,
+především kvůli průchodu přes firewally, a využívají tak také jen malou část
+HTTP.
 
 \begin{figure}[h]
 \begin{center}
@@ -581,7 +633,7 @@ především kvůli průchodu přes firewally a využívají tak také jen malou
 \end{center}
 \end{figure}
 
-HTTP je aktuálně velmi bohatý aplikační protokol, poskytující množství zajímavých a
+HTTP je aktuálně velmi bohatý aplikační protokol poskytující množství zajímavých a
 užitečných schopností. Na \ref{fig:http-komunikace} je zobrazen princip
 komunikace přes HTTP. Podmínkou pro psaní RESTful aplikací je velmi dobrá
 znalost HTTP protokolu.
@@ -644,7 +696,7 @@ nebo statická vnitřní třída.
 Třída anotovaná {\em @WebService} musí mít defaultní veřejný konstruktor.
 
 \subsubsection{Rozhraní endpointu webové služby}
-SEI je mapováno na {\em wsdl:portType} element. SEI je Java
+SEI je mapováno na {\em wsdl:portType} element a jedná se o Java
 rozhraní, které splňuje následující omezení:
 
 \begin{itemize}
@@ -660,36 +712,35 @@ rozhraní, které splňuje následující omezení:
 WSDL 1.1 nedefinuje standardní formu dědičnosti pro {\em wsdl:portType}
 elementy.
 Jediná povolená dědičnost je dědění Java metod s JAX-WS anotacemi. I když jsou metody
-definovány v jiném rozhraní než v SEI, je s nimi zacházeno jako kdyby byly
+definovány v jiném rozhraní než v SEI, je s nimi zacházeno, jako kdyby byly
 definovány uvnitř SEI.
 
 \subsubsection{Metoda}
 
 Každá veřejná metoda v SEI nemající anotaci {\em @WebMethod} s elementem {\em
-exclude} nastaven na {\em true} je mapována na {\em wsdl:operation} element v
+exclude} nastaven na {\em true}, je mapována na {\em wsdl:operation} element v
 korespondujícím {\em wsdl:portType}.
 
 Jméno operace webové služby je mapováno z elementu {\em name} v anotaci {\em
 @WebMethod} a pokud je element nespecifikován, použije se jméno Java metody.
-Element {\em name} se používá k řešení jmenných konfliktů, když existuje více
+Element {\em name} se používá k řešení jmenných konfliktů, pokud existuje více
 potencionálních operací webové služby se stejným
 názvem.
 
-Webové služby definují dva druhy metod, jimiž jsou jednosměrné (angl. {\em
+Webové služby definují dva druhy metod - jednosměrné (angl. {\em
 one-way}) a obousměrné (angl. {\em two-way}).
 Jednosměrné mají vstup, ale neprodukují žádný výstup. Obousměrné mají vstup a
 produkují výstup. Defaultně jsou všechny metody mapovány na obousměrné operace.
-Pro definování jednosměrné operace stačí metodu anotovat s {\em @OneWay}.
-Jednosměrné operace ve WSDL mají definován element {\em wsdl:input},
-definující vstupní parametry. Pro obousměrné operace je navíc definován
-element {\em wsdl:output} za předpokladu, že Java metoda nevrací typ {\em void}.
-U obousměrných jsou definovány {\em wsdl:fault} elementy v rozsahu nula až
+Pro definování jednosměrné operace stačí metodu anotovat s {\em @OneWay}, ve
+WSDL mají definován element {\em wsdl:input} definující vstupní parametry. Pro
+obousměrné operace je navíc definován element {\em wsdl:output} za předpokladu, že Java metoda nevrací typ {\em void}.
+Jsou u nich definovány {\em wsdl:fault} elementy v rozsahu nula až
 vícekrát.
 Element {\em wsdl:fault} je mapován z výjimek definovaných v metodě.
 
 Jednosměrná metoda musí splňovat určitá kritéria. Pouze metody s
-návratovým typem {\em void}, nemající parametr implementující {\em Holder}, a
-které nevyhazují kontrolované výjimky, mohou, nikoliv musí, být jednosměrné.
+návratovým typem {\em void}, které nemají parametr implementující {\em
+Holder}, a které nevyhazují kontrolované výjimky, mohou, nikoliv musí, být jednosměrné.
 
 Elementy {\em wsdl:input}, {\em wsdl:output} a {\em wsdl:fault} jsou asociovány
 s elementy {\em wsdl:message}, které definují přenášené zprávy. Hodnota atributu
@@ -701,16 +752,16 @@ atributu název Java výjimky, pokud není specifikováno jinak v anotaci {\em
 
 Pro každý element {\em wsdl:message} lze definovat {\em Document} styl nebo RPC
 styl.
-V Javě se dá styl zpráv nakonfigurovat jak pro celý SEI, tak jednotlivě pro každou metodu. Slouží k tomu
-anotace {\em @SOAPBinding} a element {\em style}.
+V Javě lze styl zpráv nakonfigurovat jak pro celý SEI, tak jednotlivě pro každou
+metodu. Slouží k tomu anotace {\em @SOAPBinding} a element {\em style}.
 
 \subsubsection{Parametry a návratové typy}
 
-Parametry a návratový typ Java metody jsou mapovány buď na zprávy nebo na deklarace
-globálních elementů. Pro přizpůsobení mapování parametru na zprávu je určena
+Parametry a návratový typ Java metody jsou mapovány buď na zprávy, nebo na
+deklarace globálních elementů. Pro přizpůsobení mapování parametru na zprávu je určena
 anotace {\em @WebParam} a pro stejný účel slouží anotace {\em @WebResult} u
 návratového typu. Parametry mohou být mapovány na komponenty pro příchozí zprávy, odchozí zprávy nebo pro oboje.
-Mapování záleží na klasifikaci parametru. Parametr může být namapován jako SOAP
+Mapování záleží na klasifikaci parametru, který může být namapován jako SOAP
 hlavička ve zprávě nastavením elementu {\em header} na {\em true} v anotaci
 {\em @WebParam}.
 Element {\em header} v anotaci {\em @WebResult} může být použit pro vložení
@@ -722,16 +773,16 @@ vyskytují.
 \begin{itemize}
   \item \textbf{\textit{In}} – hodnota je přenášena ve zprávě z klienta na
   SEI, ale není přenášena zpět.
-  \item \textbf{\textit{Out}} – hodnota je přenášena ve zprávě z SEI ke
+  \item \textbf{\textit{Out}} – hodnota je přenášena ve zprávě ze SEI ke
   klientovi, ale není přenášena zpět.
   \item \textbf{\textit{In/Out}} – hodnota je přenášena z klienta na SEI a
   zpět ke klientovi.
 \end{itemize}
 
-Návratový typ je vždycky mód {\em out}. U parametrů, jejichž typ je obalen
+Návratový typ je vždy mód {\em out}. U parametrů, jejichž typ je obalen
 třídou {\em Holder<T>}, je možno nastavit mód {\em in/out} nebo {\em out}. U
 ostatních parametrů je vždy použit mód {\em in}. Při obalení parametrů do Holder
-můžeme docílit funkcionality, kterou Java neumí a to je vracet více hodnot z
+můžeme docílit funkcionality, kterou Java neumí, a to vracet více hodnot z
 jedné metody. V anotaci {\em @WebParam} se elementem {\em mode} nastavuje mód.
 
 \subsubsection{Serializace dat}
@@ -772,15 +823,15 @@ daty. Struktura zprávy je určena na základě zvolených hodnot v elementech {
   	  bude možno validovat vůči předdefinovanému XML Schema dokumentu.
   	  \item \textit{RPC} - SOAP body bude obsahovat XML reprezentaci volání
   	  metody.
-Použije se přitom jméno metody jako hlavní element a jako potomci budou
-parametry metody a návratová hodnota.
+Jako hlavní element se použije jméno metody a jako potomci parametry metody a
+návratová hodnota.
 	\end{enumerate}
 \subparagraph{Use}
 	\begin{enumerate}[(a)]
 	  \item \textit{ENCODING} – udává, jak jsou hodnoty zakódovány do XML
 	  formátu.
 SOAP ENCODING je rozšíření SOAP Frameworku a nabízí pravidla, jak
-konvertovat jakákoliv data z SOAP datového modelu do XML formátu.
+konvertovat jakákoliv data ze SOAP datového modelu do XML formátu.
 	  \item \textit{LITERAL} - definuje, že data jsou serializována podle
 	  XML Schema.
 	\end{enumerate}
@@ -813,14 +864,14 @@ vlastnostmi:
 
 Pro parametry se vytvoří wrapper\footnote{Obálka, do které jsou vloženy elementy
 jako vnitřní prvky}, do kterého budou vygenerované typy umístěny a pro návratový
-typ se vytvoří druhý wrapper. Jejich vlastnosti se dají upravit v anotacích
+typ se vytvoří druhý wrapper. Jejich vlastnosti lze upravit v anotacích
 {\em @RequestWrapper} a {\em @ResponseWrapper}. Zde přicházejí do popředí módy
 ({\em in}, {\em out}, {\em in/out}):
 
 \begin{itemize}
   \item Parametr s módem {\em in} je mapován jako potomek globálního elementu
   request beany\footnote{Objekt vytvořený pomocí JAXB ze vstupu metody}.
-  \item Parametr s definovaným {\em out} nebo návratová hodnota jsou mapováni
+  \item Parametr s definovaným {\em out} nebo návratová hodnota jsou mapovány
   jako potomci response beany\footnote{Objekt vytvořený pomocí JAXB z výstupu metody}.
   \item Parametr s módem {\em in/out} je mapován jako potomek request beany i
   response beany.
@@ -861,8 +912,8 @@ Styl RPC je definován v anotaci {\em @SOAPBinding} s následujícími vlastnost
   \item \textbf{\textit{parameterStyle}} – WRAPPED.
 \end{itemize}
 
-Java typy pro parametry {\em in}, {\em in/out}, out a návratové typy jsou
-mapovány na XML Schema typy s použitím JAXB. Pro každý parametr metody a návratový typ je vytvořen ve WSDL
+Java typy pro parametry {\em in}, {\em in/out}, {\em out} a návratové
+typy jsou mapovány na XML Schema typy s použitím JAXB. Pro každý parametr metody a návratový typ je vytvořen ve WSDL
 dokumentu element {\em part}, který je použit v elementu {\em message}. Při
 použití RPC stylu nesmí být posílány {\em null} hodnoty.
 
@@ -905,9 +956,9 @@ může konstruktor obsahovat ty, které jsou anotovány {\em @Context}, {\em @He
 {\em @CookieParam}, {\em @MatrixParam}, {\em @QueryParam} a {\em @PathParam}. Pokud je obsaženo více
 veřejných konstruktorů, použije se ten, který obsahuje nejvíce parametrů. Při
 shodě počtu parametrů dvou konstruktorů není pořadí jednoznačně určeno a implementace JAX-RS si
-mohu zvolit, který z nich použijí, zároveň by však měly generovat varování o této
-víceznačnosti. Resource třída, která není kořenová je instanciovaná aplikačním
-kódem a nepotřebuje výše popisovaný veřejný konstruktor.
+mohou zvolit, který z nich použijí, zároveň by však měly generovat varování o
+této víceznačnosti. Resource třída, která není kořenová, je instanciovaná
+aplikačním kódem a nepotřebuje výše popisovaný veřejný konstruktor.
 
 \subsubsection{Atributy}
 \label{ch:atributy}
@@ -916,8 +967,8 @@ Při vytváření instance resource třídy lze naplnit její atributy konstrukt
 metodami. Pokud má atribut modifikátor {\em public}, lze přidat anotace přímo k
 atributu. Anotace jsou stejné u všech tří zmíněných přístupů plnění hodnot - {\em @Context}, {\em @HeaderParam},
 {\em @CookieParam}, {\em @MatrixParam}, {\em @QueryParam} a {\em @PathParam}. Protože injektování probíhá
-při tvorbě objektu, použití těchto anotací (s výjimkou {\em @Context}) v resource třídě u
-konstruktoru a při nastavování atributů je podporováno pouze u {\em per-request}
+při tvorbě objektu, je použití těchto anotací (s výjimkou {\em @Context}) v
+resource třídě u konstruktoru a při nastavování atributů podporováno pouze u {\em per-request}
 životního cyklu. Objekty vrácené pomocí sub-resource lokátoru\footnote{Metoda
 resource třídy používaná k lokaci subzdrojů korespondujícího zdroje.} se
 inicializují programově přímo v kódu, nejsou tedy ve správě JAX-RS runtime.
@@ -956,7 +1007,7 @@ Jejich anotace jsou následující {\em @GET}, {\em @POST}, {\em @PUT}, {\em
 @DELETE}, {\em @HEAD}, {\em @OPTIONS}.
 Lze si zadefinovat designator pro vlastní HTTP metodu tím, že se vytvoří anotace mající
 anotaci {\em @HttpMethod}. Pouze metody, které mají modifikátor přístupu {\em
-public}, mohou být považovány jako resource metody.
+public}, mohou být považovány za resource metody.
 
 Po invokaci resource metody jsou parametry anotované {\em @Context}, {\em @HeaderParam},
 {\em @CookieParam}, {\em @MatrixParam}, {\em @QueryParam}, {\em @PathParam} a {\em @FormParam} mapovány z
@@ -1013,18 +1064,19 @@ Jiný & Návratový typ nebo podtřída  & Třída instance & Generický typ \\
 \label{tab:genericke-a-raw-typy}
 \end{table}
 
-Sur-resource metody a sub-resource lokátor metody mohou vyhazovat očekávané nebo
-neočekávané výjimky. Tyto výjimky musí být runtimem namapovány na HTTP odpověd.
+Sub-resource metody a sub-resource lokátor metody mohou vyhazovat očekávané
+nebo neočekávané výjimky. Tyto výjimky musí být runtimem namapovány na HTTP odpověd.
 
 Očekávanou výjimku lze přebalit do instance {\em WebApplicationException} a
 jejích podtříd nebo je možné implementovat pro výjimku exception
 mapper\footnote{Java třída provádění mapování výjimky na HTTP odpověď.}, kterému
-jako parametr bude předána výjimka a na základě ní bude vytvořena požadovaná odpověď.
+bude jako parametr předána výjimka a na základě ní bude vytvořena požadovaná
+odpověď.
 
 Root resource třída je ukotvena v URI prostoru použitím anotace {\em @Path}.
 Hodnota v anotaci je relativní URI šablona cesty, jejíž základní URI je postavena z deployment kontextu a cesty
-aplikace. Šablona URI cesty je textový řetězec s žádným nebo více vloženými parametry. Po
-dosazení konkrétních hodnot za parametry se ze šablony stane validní URI cesta. Parametr v
+aplikace. Šablona URI cesty je textový řetězec se žádným nebo více vloženými
+parametry. Po dosazení konkrétních hodnot za parametry se ze šablony stane validní URI cesta. Parametr v
 šabloně cesty je umístěn ve složených závorkách \{\}. Parametr v URI šabloně
 může specifikovat i regulární výraz. Například {\em @Path(„test/{id:.+}“)} říká,
 že resource třída či metoda bude vyhovovat, pokud URI bude začínat na test a poté bude následovat alespoň jeden
@@ -1044,7 +1096,7 @@ ale nesmí obsahovat entity body parametr.
 
 U resource metod a resource třid lze definovat formát akceptovatelný pro
 požadavek i formát, jenž bude navrácen v odpovědi. Pokud je nadefinován formát u
-třídy a zároveň u metody, má přednost formát u metody. Při nedefinovaném formátu
+třídy i metody, má přednost formát u metody. Při nedefinovaném formátu
 u metody se akceptují ty, které jsou definovány u třídy. Pokud není formát
 definovaný ani ve třídě, použije se formát {\em „*/*“}. V HTTP protokolu se pro
 práci s formáty používají dvě hlavičky, jsou jimi {\em Content-Type} a {\em
@@ -1057,24 +1109,24 @@ hlavičce {\em Accept} a {\em @Produces} hlavičce {\em Content-Type}.
 \subsubsection{Dědičnost resource tříd}
 \label{subsec:dedicnost-resource-trid}
 
-JAX-RS anotace mohou být užity nejen přímo v resource třídě, ale mohou také v
-nad třídách a rozhraních, jež implementují. Proto je nutné specifikovat pořadí,
+JAX-RS anotace mohou být užity nejen přímo v resource třídě, ale také v
+nadtřídách a rozhraních, jež implementují. Proto je nutné specifikovat pořadí,
 v jakém budou mít anotace přednost. Největší přednost mají anotace přímo v
 resource třídě. Pokud u resource třídy nebo u resource metody nějaké jsou, jsou
 ostatní třídy a rozhraní ignorovány. Dalším pravidlem je, že má vždy přednost
 nadtřída před rozhraním a nezáleží na tom, jak je třída vysoko. V řetězu tříd
-dědičnosti seřazeném od nejobecnější třídy po nejkonkrétnější třídu má vždy
+dědičnosti seřazeném od nejobecnější po nejkonkrétnější třídu má vždy
 větší prioritu ta, která je konkrétnější. Jelikož jedna třída může mít maximálně
 jednoho přímého předka, nemůže zde nastat kolize. Pokud by každá třída
 implementovala pouze jeden interface, kolize by také nemohla nastat a přednost
-by měly anotace z interfacu, který je nejblíže třídě. Pokud na jedné úrovni je
-více interfaců, tak přednost interfaců není specifikována a každý implementátor
-JAX-RS si může zvolit vlastní pořadí.
+by měly anotace z interfacu, který je nejblíže třídě. Pokud je na jedné úrovni
+více rozhraní, není jejich přednost specifikována a každý
+implementátor JAX-RS si může zvolit vlastní pořadí.
 
 \subsubsection{Entity provideři}
 \label{subsec:entity-provideri}
 
-V JAX-RS existují entity provideři, kteří mají na starosti mapování přenášených
+V JAX-RS existují entity provideři, kteří se starají o mapování přenášených
 dat na Java objekty a obráceně. Jedním typem entity providerů je {\em
 MessageBodyReader} a druhým je {\em MessageBodyWriter}.  Rozhraní 
 {\em MessageBodyReader} definuje kontrakt mezi JAX-RS runtime a komponentami
@@ -1105,7 +1157,7 @@ podporuje již zmíněný Java typ.
   \item Pokud předchozí krok vybral vhodného {\em MessageBodyReader} providera,
   pak je použita jeho metoda {\em readFrom} pro namapování entity body na
   požadovaný Java typ.
-  \item Jinak server runtime musí vygenerovat výjimku {\em
+  \item V opačném případě musí server runtime vygenerovat výjimku {\em
   NotSupportedException} se statusem 415.
 \end{enumerate}
 
@@ -1125,14 +1177,14 @@ jeho podtříd je objekt získán z property entity.
   \item Vybere se množina {\em MessageBodyWriter} providerů, kteří podporují typ
   vráceného objektu a media typ.
   \item Seřadí se vybraní {\em MessageBodyWriter} provideři primárně podle
-  podporovaného generického typu od toho, který je nejblíže vrácenému objektu a sekundárně se seřadí
-podle podporovaného media typu.
+  podporovaného generického typu od toho, který je nejblíže vrácenému objektu, a
+  sekundárně podle podporovaného media typu.
   \item Iterace přes všechny seřazené {\em MessageBodyWriter} providery a
   zavolání metody {\em isWritable}. Následně dojde k vybrání nejvhodnějšího
   {\em MessageBodyWriter}.
   \item Pokud v předchozím kroku došlo k vybrání vhodného kandidáta, použije se
 metoda {\em writeTo} k namapování objektu na entity body.
-  \item Jinak server runtime musí vygenerovat {\em
+  \item V opačném případě musí server runtime vygenerovat {\em
   InternalServerErrorException}, což je podtřída {\em WebApplicationException}
   se statusem 500.
 \end{enumerate}
@@ -1165,7 +1217,7 @@ Pokud se člověk dostane k projektu používající Maven, nejenže se hned ori
 v adresářové struktuře, ale pro spuštění celého sestavení stačí zadat příkaz
 {\em mvn install}.
 
-\begin{lstlisting}[frame=single, caption={Defaultní adresářová struktura Maven
+\begin{code}[frame=single, caption={Defaultní adresářová struktura Maven
 projektu}, label={lst:maven-dirs}] pom.xml
 src/
   main/
@@ -1177,7 +1229,7 @@ src/
 target/
   classes/
   deployable artifact (JAR, EAR, WAR, ...)
-\end{lstlisting}
+\end{code}
 
 Zde je popsána struktura z \ref{lst:maven-dirs}. Soubor {\em pom.xml} je Maven
 konfigurační soubor daného projektu.
@@ -1194,8 +1246,7 @@ kdo přispívá do projektu a na kterých projektech je tento projekt závislý.
 informaci, jakým SCM je projekt verzován a na jaké adrese lze nalézt repozitář. Všechny tyto
 informace jsou konfigurovány v souboru pom.xml, který je povinný pro každý projekt. Každý
 projekt v Mavenu je jednoznačně identifikovatelný, protože má Maven coordinates, které se
-skládají z {\em groupId}, {\em artifactId} a {\em version}. Tyto coordinates
-jednoznačně identifikují projekt.
+skládají z {\em groupId}, {\em artifactId} a {\em version}. 
 {\em GroupId} uvozuje skupinu, pod kterou projekt patří (například
 {\em org.apache.maven}), {\em artifactId} blíže identifikuje projekt v rámci
 {\em groupId} (například {\em maven-plugin-api}) a {\em version} udává verzi projektu
@@ -1218,7 +1269,7 @@ artefakt v lokálním repozitáři a až poté prohledává ty vzdálené. Při 
 {\em mvn install} se v poslední fázi sestavení nainstaluje nově vytvořený
 artefakt do lokálního repozitáře pro použití v dalších projektech. Pokud projekt obsahuje
 závislost mající další závislosti, jsou automaticky získány všechny. Strom
-závislostí se dá zobrazit spuštěním {\em mvn dependency:tree}, což se dá
+závislostí lze zobrazit spuštěním {\em mvn dependency:tree}, což lze
 vysvětlit jako spuštění pluginu {\em dependency} s goalem {\em tree}.
 
 \subsubsection{Životní cyklus}
@@ -1259,12 +1310,12 @@ jednotlivých fázích, je popsáno v kapitole \ref{subsec:pluginy-a-goaly}.
 Goal je specifická úloha obsažená v Maven pluginu, kterou je možné spustit.
 Vhodným příkladem může být jednoduchý {\em maven-jar-plugin}, který má {\em
 pluginId} jar a goal jar. Plugin může být spuštěn příkazem {\em mvn
-pluginId:goal} nebo může být přijojen k určité fázi životního cyklu.
+pluginId:goal} nebo může být připojen k určité fázi životního cyklu.
 Vyvoláním fáze se spustí plugin s určitým goalem. Celý životní cyklus sestavení
 je v podstatě postupné spouštění různých goalů z různých pluginů. Goaly je možno
 konfigurovat v pom.xml.
 
-\begin{lstlisting}[frame=single,caption={Ukázka konfigurace v pluginu}]
+\begin{code}[frame=single,caption={Ukázka konfigurace v pluginu}]
 <plugin>
   <groupId>org.apache.maven.plugins</groupId>
   <artifactId>maven-compiler-plugin</artifactId>
@@ -1275,7 +1326,7 @@ konfigurovat v pom.xml.
     <debug>true</debug>
   </configuration>
 </plugin>
-\end{lstlisting}
+\end{code}
 
 Konfiguraci goalu lze umístit na různá místa v konfiguračních pom.xml souborech,
 čímž je myšleno, do kterého XML elementu se má umístit element {\em
@@ -1291,8 +1342,8 @@ pluginu.
 Aplikovány budou pouze ty konfigurační elementy pluginu, které nepřepisují
 konfigurační elementy goalu. Situace se trochu zkomplikuje při multimodulových
 projektech, kde je plugin nakonfigurován v rodičovském modulu i v potomkovi.
-Jelikož Maven tvoří efektivní pom, přidá konfiguraci pluginu, resp. goalu, z
-rodiče do konfigurace pluginu, resp. Goalu, potomka.
+Jelikož Maven tvoří efektivní pom, přidá konfiguraci pluginu, resp. goalu z
+rodiče do konfigurace pluginu, resp. goalu potomka.
 Seřazená konfigurace od nejobecnější k nejkonkrétnější vypadá takto: konfigurace
 pluginu v rodiči, konfigurace pluginu v potomkovi, konfigurace goalu v rodiči a
 konfigurace goalu v potomkovi.
@@ -1302,7 +1353,7 @@ konfigurace goalu v potomkovi.
 Multimodulový projekt je definován rodičovským pomem, uvnitř kterého jsou definovány
 jeho submoduly. Rodičovský pom bývá též nazývaný top-level pom.
 
-\begin{lstlisting}[frame=single,caption={Ukázka konfigurace multimodulového
+\begin{code}[frame=single,caption={Ukázka konfigurace multimodulového
 projektu}] 
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -1337,7 +1388,7 @@ projektu}]
         <dependencies...>
     </dependencyManagement>
 </project>
-\end{lstlisting}
+\end{code}
 
 Rodič definuje Maven coordinates ({\em groupId}, {\em artifactId} a {\em
 version}).
@@ -1352,7 +1403,7 @@ všechny submoduly budou také sestaveny.
 Maven plugin se skládá z plugin descriptoru a jednoho nebo více MOJO. Maven běží
 uvnitř IoC kontejneru Plexus \cite{PlexusHome}, který se stará o injektování komponent,
 které jsou definovány v MOJO třídě. MOJO třída je třída implementující rozhraní {\em Mojo},
-který obsahuje výchozí metodu {\em execute}, která je výchozím bodem pro každý
+který obsahuje výchozí metodu {\em execute}, jež je výchozím bodem pro každý
 plugin.
 Komponenty mohou být v MOJO třídě buď Java primitivní typy, soubory, pole, MOJO
 třídy nebo reference na jiný projekt, než ve kterém je plugin spuštěn.
@@ -1362,7 +1413,7 @@ umístěn v {\em META-INF/maven/plugin.xml} Tento descriptor není nutné psát
 ručně, ale lze jej generovat pluginem {\em maven-plugin-plugin} a jeho goalem
 {\em descriptor}. Descriptor je generován na základě introspekce kódu.
 
-\begin{lstlisting}[frame=single,caption={Ukázka plugin descriptoru}]
+\begin{code}[frame=single,caption={Ukázka plugin descriptoru}]
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin>
   <name>jrapidoc-rest-plugin</name>
@@ -1409,15 +1460,6 @@ ručně, ale lze jej generovat pluginem {\em maven-plugin-plugin} a jeho goalem
       <configuration>
         <basedir implementation="java.io.File" 
         default-value="${project.basedir}"/>
-        <project 
-        implementation="org.apache.maven.project.MavenProject" 
-        default-value="${project}"/>
-        <session 
-        implementation="org.apache.maven.execution.MavenSession" 
-        default-value="${session}"/>
-        <settings 
-        implementation="org.apache.maven.settings.Settings" 
-        default-value="${settings}"/>
         <target implementation="java.io.File" 
         default-value="${project.build.directory}"/>
       </configuration>
@@ -1425,7 +1467,7 @@ ručně, ale lze jej generovat pluginem {\em maven-plugin-plugin} a jeho goalem
   </mojos>
   <dependencies...>
 </plugin>
-\end{lstlisting}
+\end{code}
 
 Postup při tvorbě pluginu spočívá v založení Maven projektu s {\em packaging}
 nastaveným na {\em maven-plugin}. Dalším krokem je nakonfigurování potřebných
@@ -1440,7 +1482,7 @@ zde budou vysvětleny. Element {\em name} udává jméno goalu, který bude
 reprezentován MOJO třídou.
 Element {\em defaultPhase} specifikuje defaultní fázi, ke které bude goal
 napojen, pokud nebude explicitně definováno v konfiguraci jinak. Element
-{\em requiresDependencyResolution} definuje jaké závislosti bude plugin mít na
+{\em requiresDependencyResolution} definuje, jaké závislosti bude plugin mít na
 classpath při spuštění. Možné volby jsou: {\em NONE}, {\em COMPILE},
 {\em COMPILE\_PLUS\_RUNTIME}, {\em RUNTIME}, {\em RUNTIME\_PLUS\_SYSTEM} a {\em
 TEST}.
@@ -1451,34 +1493,34 @@ TEST}.
 Další důležitou částí vedle metody execute() a anotací jsou v MOJO třídě parametry. Parametry
 se do MOJO dostanou z konfigurace pluginu v pom.xml pomocí IoC kontejneru Plexus.
 
-\begin{lstlisting}[frame=single,caption={Definice parametru v
+\begin{code}[frame=single,caption={Definice parametru v
 Mojo},label={lst:parametr-v-mojo}] 
 @Parameter(defaultValue = "${project.basedir}", readonly = true) 
 File basedir;
-\end{lstlisting}
+\end{code}
 
-V ukázce \ref{lst:parametr-v-mojo} je vidět jak se definuje instanciování
+V ukázce \ref{lst:parametr-v-mojo} je vidět, jak se definuje instanciování
 objektu typu {\em File} reprezentujícího kořenový adresář projektu. Hodnota
 elementu {\em defaultValue} obsahuje ve složených závorkách jméno maven
 property, ve které je uložena cesta k tomuto adresáři. Parametry mohou být i
-vícehodnotové, to se může hodit například pokud je třeba do konfigurace přidat
+vícehodnotové, což je užitečné v případě, kdy je třeba do konfigurace přidat
 parametr typu pole nebo {\em List} a podobné. Co je pro to nutné udělat, je
 vidět na ukázkách \ref{lst:mojo-vicehodnotovy-parametr} a na
 \ref{lst:pom-vicehodnotovy-parametr}.
 
-\begin{lstlisting}[frame=single,caption={Definice vícehodnotového parametru v
+\begin{code}[frame=single,caption={Definice vícehodnotového parametru v
 Mojo},label={lst:mojo-vicehodnotovy-parametr}] 
 @Parameter(name = "includes")
 List<String> includes;
-\end{lstlisting}
+\end{code}
 
-\begin{lstlisting}[frame=single,caption={Konfigurace vícehodnotového parametru v
+\begin{code}[frame=single,caption={Konfigurace vícehodnotového parametru v
 pom.xml},label={lst:pom-vicehodnotovy-parametr}] 
 <includes>
     <include>airservice.resources</include>
     <include>airservice.otherresources</include>
 </includes>
-\end{lstlisting}
+\end{code}
 
 V definici parametru pro MOJO je podporován i typ {\em Map<String, String>}.
 Konfigurace takového parametru vypadá podobně jako konfigurace pro pole, ale místo názvů elementů
@@ -1546,8 +1588,9 @@ nezobrazí v GUI u zdroje žádné metody.
 {\em @MatrixParam}, {\em QueryParam}, {\em CookieParam}.
     \item Přestože dokumentace uvádí, že {\em Content-Type} je zobrazen v GUI, není to
 pravda.
-    \item Pokud je návratový typ {\em Map<K, V>}, nelze to zdokumentovat. Stejně
-    tak u entity body parametru.
+    \item Pokud je návratový typ {\em Map<K, V>}, nelze tuto skutečnost
+    zdokumentovat.
+    Stejně tak u entity body parametru.
     \item Pokud se jedná o asynchronní metodu, ignoruje to.
     \item Nepodporuje více anotací pro typ HTTP metody ({\em @GET}, {\em @POST},
     \ldots) u jedné Java metody.
@@ -1614,7 +1657,7 @@ projekty ve velkých korporacích.
 \paragraph{Výhody}
 
 \begin{itemize}
-  \item Pracuje s SOAP-based webovými službami, RESTful službami, JMS a jinými.
+  \item Pracuje se SOAP-based webovými službami, RESTful službami, JMS a jinými.
   \item Request se dá editovat pomocí formuláře (urychluje práci).
   \item Lze vidět přenos dat až na úrovni HTTP protokolu.
   \item Intuitivní a zároveň široce přizpůsobitelné.
@@ -1624,8 +1667,8 @@ projekty ve velkých korporacích.
 
 \begin{itemize}
   \item Nejedná se o generátor API dokumentace.
-  \item V testované verzi (4.6.4) při načtení WADL aplikace přestala reagovat, přestože byl
-WADL validní vůči svému XML Schema.
+  \item V testované verzi (4.6.4) při načtení WADL přestala aplikace  reagovat,
+  přestože byl WADL validní vůči svému XML Schema.
 \end{itemize}
 
 
@@ -1655,7 +1698,7 @@ projektu, aniž by bylo nutné měnit jeho zdrojový kód, který obsahuje vzdá
 rozhraní. Nástroj bude možné připojit k již existujícímu projektu například až v
 závěrečné fázi vývoje a vygenerovat tak API dokumentaci. Umožněno bude také
 volitelné použití doplňujících anotací nástroje. Tyto anotace jsou určeny pro
-rozšíření a zkvalitnění API dokumentace, protože ne všechna data se dají vyčíst
+rozšíření a zkvalitnění API dokumentace, protože ne všechna data lze vyčíst
 na základě introspekce kódu rozhraní.
 
 \subsection{Požadavky na RESTful dokumentaci}
@@ -1731,9 +1774,9 @@ služba definuje.
 \label{subsec:soap-model-rozhrani}
 
 Model rozhraní bude vytvářen z pohledu SOAP-based
-webových službeb a nebude mít do sebe zanesen pohled návrhu v Javě. To
+webových služeb a nebude mít do sebe zanesen pohled návrhu v Javě. To
 znamená, že návrh z Javy bude transformován na obecný model SOAP-based webových
-službeb a nebude možné rozeznat, jakou technologií a přístupem bylo rozhraní
+služeb a nebude možné rozeznat, jakou technologií a přístupem bylo rozhraní
 navrženo. V modelu například nebudou následující informace:
 
 \begin{itemize}
@@ -1745,7 +1788,7 @@ navrženo. V modelu například nebudou následující informace:
 Takové informace by byly v dokumentaci nežádoucí, protože by se nejednalo o
 pohled na SOAP-based webové služby, ale o pohled návrhu rozhraní na úrovni Javy.
 
-Anotace budou třeba pro přidávání popisu apodobně. Na rozdíl od JAX-RS, kde je
+Anotace budou třeba pro přidávání popisu a podobně. Na rozdíl od JAX-RS, kde je
 možné využít návratový typ {\em Response} a je žádoucí přidat pomocnou anotaci
 pro zkvalitnění dokumentace, lze v JAX-WS většinu informací vyčíst na základě
 statické analýzy kódu.
@@ -1920,7 +1963,7 @@ pouze jeden vstupní typ a jeden návratový typ. SOAP-based webové služby umo
 v SOAP zprávě posílat neomezený počet vstupních a návratových typů. SOAP-based
 webová služba dále obsahuje jednosměrné metody a proto je důležité z hlediska
 dokumentace odlišit prázdný návratový typ v SOAP zprávě a nevrácení žádné SOAP
-zprávy. Pokud SOAP-based webová služba metoda vrací alespoň prázdnou SOAP
+zprávy. Pokud metoda SOAP-based webové služby vrací alespoň prázdnou SOAP
 zprávu, je dokumentována odpověd s HTTP statusem 200 OK bez transportních typů.
 Jedná-li se o jednosměrnou metodu, není seznam možností odpovědi vůbec vytvořen.
 Dalším rozdílem je, že RESTful webová služba může přijímat HTTP parametry
@@ -1936,7 +1979,7 @@ pro přenos mezi klientem a serverem. V této práci jsou označovány jako tran
 \paragraph{Problematika v JAX-RS}
 \mbox{}\\
 
-\begin{lstlisting}[frame=single,caption={Definice transportního
+\begin{code}[frame=single,caption={Definice transportního
 typu},label={lst:definice-transportniho-typu}] 
 public class DestinationExample {
 
@@ -1945,10 +1988,10 @@ public class DestinationExample {
     public String name;
 
     public DestinationExample() {}
-    settery...
-    gettery...
+    //settery...
+    //gettery...
 }
-\end{lstlisting}
+\end{code}
 
 V JAX-RS se pro mapování dat na Java typy a zpět používají entity provideři (podrobněji v
 \ref{subsec:entity-provideri}). Pro analýzu typového systému je důležitý poznatek, že ke každému media
@@ -1961,25 +2004,26 @@ pro media typ {\em application/json} pracující s knihovnami buď Jackson 1.9.x
 nebo Jettison. Kromě tří zmíněných je možné poměrně snadno vytvořit jiného providera, který
 bude použit pro mapování s využitím jiné knihovny. 
 
-\begin{lstlisting}[frame=single,caption={Vrácený objekt při použití media typu application/json
+\begin{code}[frame=single,caption={Vrácený objekt při použití media typu application/json
 },label={lst:vraceny-objekt-format-json}]
 {
     "name": "Prague"
 }
-\end{lstlisting}
+\end{code}
 
-\begin{lstlisting}[frame=single,caption={Vrácený objekt při použití media typu
+\begin{code}[frame=single,caption={Vrácený objekt při použití media typu
 application/xml},label={lst:vraceny-objekt-format-xml}] 
 <destination>
-    <id>54</id> <name>Prague</name>
+    <id>54</id> 
+    <name>Prague</name>
 </destination>
-\end{lstlisting}
+\end{code}
 
 Takováto diverzita providerů neposkytuje jednoznačný způsob tvorby transportních
 typů v dokumentaci. Na ukázce \ref{lst:definice-transportniho-typu} je
 znázorněna velmi jednoduchá třída definující transportní typ, který se bude
 serializovat. Třída obsahuje anotaci {\em @JsonIgnore} způsobující ignorování
-atributu. Tato anotace má význam pouze, pokud je jako entity provider použita
+atributu. Tato anotace má význam, pouze pokud je jako entity provider použita
 knihovna Jackson (media typ {\em application/json}).
 Například při použití entity providera JAXB (media typ {\em application/xml}) je
 anotace ignorována. Na ukázkách \ref{lst:vraceny-objekt-format-json} a
@@ -1997,7 +2041,7 @@ a {\em \nolinkurl{java.lang.reflect.TypeVariable}}. Generika budou podporovaná
 jak pro vstupní, tak návratové typy metod. Budou moci být dokumentovány metody s
 podobnou signaturou jako na ukázce \ref{lst:signatury-metod}.
 
-\begin{lstlisting}[frame=single, caption={Příklad podporovaných signatur
+\begin{code}[frame=single, caption={Příklad podporovaných signatur
 resource metod}, label={lst:signatury-metod}]
 public void foo1(List<String> l);
 
@@ -2026,7 +2070,7 @@ public <T extends List<TypeA>> T foo12();
 public <T> void foo13(T t);
 
 public <T> T foo14();
-\end{lstlisting}
+\end{code}
 
 \paragraph{Problematika v JAX-WS}
 \mbox{}\\
@@ -2034,7 +2078,7 @@ public <T> T foo14();
 V JAX-WS kontextu je situace jednodušší. Standardně se vše serializuje pouze do
 formátu XML a používá se pro serializaci JAXB. A jak je popsáno v
 \ref{subsec:soap-model-rozhrani}, není nutné přidávat do rozhraní jiné anotace
-než ty co jsou v JAX-WS. Entity provider pro JAXB bude zabudován v pluginu, ale
+než ty, co jsou v JAX-WS. Entity provider pro JAXB bude zabudován v pluginu, ale
 možnost nahrazení ho za jiný bude existovat stejně jako pro RESTful webové
 služby.
 
@@ -2044,7 +2088,7 @@ služby.
 Aby byl nástroj co nejvíce flexibilní, bude možné mezi fázemi vytvoření modelu v
 paměti a vygenerováním modelu do souboru rozšířit nástroj o operace nad modelem.
 Tyto operace budou moci model nejen číst a analyzovat, ale také modifikovat.
-Poté co proběhnou operace nad modelem, bude tento modifikovaný model předán
+Poté, co proběhnou operace nad modelem, bude tento modifikovaný model předán
 komponentě pro vygenerování do souboru.
 Jednou z ukázek operace může být kontrola, zda všechny metody v modelu mají
 vytvořen popis a druhou změna názvu datového typu. Tyto operace budou přidávány
@@ -2082,8 +2126,8 @@ odkud dojde ke stažení modelu, transformaci a zobrazení.
 
 \chapter{Návrh}
 
-Tato kapitola obsahuje návrh řešení vyplývající z analýzy požadavků. Obsahuje návrh
-architektury jak nástroje samotného, tak jeho komponent, kterými jsou: Maven plugin a GUI
+Tato kapitola obsahuje návrh řešení vyplývající z analýzy požadavků. Obsahuje
+návrh architektury jak nástroje samotného, tak jeho komponent, kterými jsou: Maven plugin a GUI
 klient. Budou zde popsány výhody a nevýhody zvoleného návrhu.
 
 \section{Architektura}
@@ -2129,8 +2173,8 @@ injection \cite{IoCFowler} nakonfiguruje a vytvoří instanci Maven REST Adapter
 
 Komponenta sloužící jako wrapper pro předání řízení komponentě REST API Introspector.
 Jedná se o návrhový vzor adapter, který zde slouží pro oddělení Maven API od funkcionality
-pluginu. V budoucnu se může přidat adapter pro jiný sestavovací nástroj než je
-Maven a nebude nutné dělat žádný zásah do stávajícího zdrojového kódu.
+pluginu. V budoucnu se může přidat adapter pro jiný sestavovací nástroj, než je
+Maven a nebude nutné provádět žádný zásah do stávajícího zdrojového kódu.
 
 \textbf{\textit{Resource Class Processor}}
 
@@ -2140,7 +2184,7 @@ výsledný model.
 
 \textbf{\textit{Model Builder}}
 
-Komponenta budující model. Komponenta obsahuje doménové třídy reprezentující model a
+Komponenta budující model, která obsahuje doménové třídy reprezentující model a
 ke každé doménové třídě odpovídající builder třídu, která usnadňuje vytváření. Pro builder
 třídy je použit návrhový vzor builder.
 
@@ -2205,7 +2249,7 @@ Na \ref{fig:navrh-modelu} je znázorněn diagram tříd reprezentující model
 vzdáleného rozhraní, který vznikl na základě analýzy v
 \ref{subsec:jednotny-model-vzdaleneho-rozhrani}. Pro RESTful webové služby i
 SOAP-based webové služby bude existovat pouze jeden. Zda-li se vytvoří instance
-reprezentace API k RESTful webovým službám či SOAP-based webovým službám bude
+reprezentace API k RESTful webovým službám či SOAP-based webovým službám, bude
 záležet na řídící komponentě tvorby modelu, která jej bude vytvářet.
 
 \begin{figure}[h]
@@ -2231,7 +2275,7 @@ základě rekurzivního procházení každého typu a jeho atributů.
 
 Třída reprezentující skupinu služeb se stejným URI prefixem.
 
-\textbf{\textit{Service}}Service
+\textbf{\textit{Service}}
 
 Třída reprezentující kořenovou resource třídu (pro RESTful webové služby) nebo
 SEI (pro SOAP-based webové služby), která obsahuje seznam svých metod.
@@ -2253,8 +2297,8 @@ Třída nesoucí informace o způsobu serializování zpráv v kontextu JAX-WS.
 
 \textbf{\textit{Return}}
 
-Třída nereprezentuje návratový typ metody jak evokuje její název, ale jednu možnou
-odpověď, jakou může metoda vrátit. Odpověď se skládá z HTTP statusu, návratových typů,
+Třída nereprezentuje návratový typ metody, jak evokuje její název, ale jednu
+možnou odpověď, jakou může metoda vrátit. Odpověď se skládá z HTTP statusu, návratových typů,
 návratových typů SOAP hlaviček, seznamu HTTP hlaviček a seznamu HTTP cookie.
 
 \textbf{\textit{TransportType}}
@@ -2295,10 +2339,10 @@ zmíněných.
 
 \section{Návrhové vzory}
 
-Tato kapitola obsahuje popsané návrhové vzory jenž jsou použity v nástroji.
+Tato kapitola obsahuje popsané návrhové vzory, jenž jsou použity v nástroji.
 
 \textbf{\textit{Factory method}}
-%TODO Obrázek 3.2 je hnusne vygenerovanej opravit ho
+
 \begin{figure}[h]
 \begin{center}
 \includegraphics[width=13cm]{images-pdf/FactoryMethodDesignPattern.pdf}
@@ -2392,12 +2436,12 @@ Vyhledávání JAX-WS a JAX-RS spočívá ve vyhledání tříd majících anota
 možnosti jak třídy vyhledat.
 První přístup je získání seznamu všech tříd na classpath a jejich postupné
 nahrávání do paměti instancí třídy {\em ClassLoader}. Po nahrání třídy do paměti
-následně dotazování pomocí Java Reflection API, zda třída obsahuje požadovanou
-anotaci. Tento přístup však není nejlepší volbou především z hlediska časové
+následné dotazování pomocí Java Reflection API, zda třída obsahuje požadovanou
+anotaci. Tento přístup však není nejlepší volbou, především z hlediska časové
 náročnosti. V nejhorším případě budou muset být nahrány všechny třídy, což může
 u většího projektu trvat desítky sekund. Nástroj používá druhou metodu získání
-tříd, která je rychlejší. Třídy nejsou nahrávány do paměti, ale napřed proběhne
-analýza bytecode a vyberou se pouze ty, které vyhovují a ty se nahrají do
+tříd, která je rychlejší. Třídy nejsou nahrávány do paměti, ale nejdříve
+proběhne analýza bytecode a vyberou se pouze ty, které vyhovují a ty se nahrají do
 paměti.
 Po jejich nahrání je možné nad nimi používat Java Reflection API. Nástroj pro
 tento přístup používá knihovnu Reflections, která je nástupcem knihovny
@@ -2420,9 +2464,9 @@ Jsou pro to vytvořeny přídavné anotace nástroje JRAPIDoc, které mají za c
 pomoci tvořit detailnější dokumentaci. Anotace jsou v samostatném balíku a lze
 je tedy volitelně připojit do projektu. Připojení probíhá standardním přidáním
 Maven závislosti do projektu. Jazyk Java nedovoluje pomocí anotací poskytnout
-takový přístup, který by dokázal popsat všechny možné detaily rozhraní a zároveň
-aby bylo anotování efektivní a přehledné. Vznikl proto kompromis, který je
-efektivní, přehledný, sémantický a zároveň dokáže pokrýt většinu požadavků na
+takový přístup, který by dokázal popsat všechny možné detaily rozhraní a
+zároveň, aby bylo anotování efektivní a přehledné. Vznikl proto kompromis, který
+je efektivní, přehledný, sémantický a zároveň dokáže pokrýt většinu požadavků na
 tvorbu dokumentace.
 
 Nově vzniklé anotace:
@@ -2435,7 +2479,7 @@ Přidává popis k elementům rozhraní.
 \mbox{}\\
 \textbf{\textit{@org.jrapidoc.annotation.rest.DocIsRequired}}
 
-Indikuje zda je parametr či atribut povinný.
+Indikuje, zda je parametr či atribut povinný.
 \mbox{}\\
 \mbox{}\\
 \textbf{\textit{@org.jrapidoc.annotation.rest.DocPathExample}}
@@ -2470,7 +2514,7 @@ Další podrobnosti o přídavných anotacích lze nalézt v javadoc.
 \section{Tvorba transportních typů}
 
 Tvorba transportních typů může být prováděna buď zabudovanými třídami pro jejich
-tvorbu nebo mohou být vytvořeny jiné třídy, které se nakonfigurují jako náhrada
+tvorbu, nebo mohou být vytvořeny jiné třídy, které se nakonfigurují jako náhrada
 za původní funkcionalitu. Defaultně se pro část RESTful webových služeb
 používají třídy využívající knihovnu Jackson a pro SOAP-based webové služby
 knihovna JAXB. V nástroji jsou ještě dvě třídy, které lze používat pro tvorbu
@@ -2548,7 +2592,7 @@ Pomocnými funkcemi jsou goal {\em help} v pluginu a javadoc rozhraní nástroje
 \subparagraph{Přehlednost}
 \mbox{}\\
 
-Bude testováno jestli uživatel porozumí úkonům, které simulují běžné použití
+Bude testováno, zda uživatel porozumí úkonům, které simulují běžné použití
 nástroje a bude je moci bez větších potíží vykonat.
 
 \paragraph{Provedení testů}
@@ -2621,8 +2665,8 @@ kroku 1.
 Převážně v úvodu testování si respondent stěžoval na neexistující wiki stránku
 projektu.
 Návod konfigurace pluginu z goalu {\em help} se zdál být velmi stručný a pro
-člověka neznalého principů fungování pluginu téměř nic neříkající. To by měla
-vyřešit wiki stránka, která by obsahovala více podrobný popis konfigurace včetně
+člověka neznalého principů fungování pluginu téměř nic neříkající. Tento problém
+by měla vyřešit wiki stránka, která by obsahovala více podrobný popis konfigurace včetně
 jejích ukázek. Respondent navrhl, aby byl na wiki také ukázkový projekt, na
 kterém by bylo vidět, jaké vlastnosti plugin má a jak se dá použít.
 
@@ -2669,20 +2713,21 @@ nesrozumitelnou konfiguraci.
 
 \section{Konfigurace}
 
-Pokud chceme provést konfiguraci Maven pluginu je dobré si ji zobrazit pomocí
+Pokud chceme provést konfiguraci Maven pluginu, je dobré si ji zobrazit pomocí
 spuštění goalu {\em help} u konkrétního pluginu. Při spuštění goalu pro Swagger
 plugin s parametrem {\em -Ddetail=true} se žádné informace nezobrazí a volání
 skončí vyhozenou výjimkou {\em NullPointerException}. Plugin nástroje Miredot
-goal pro zobrazení konfigurace ani neobsahuje, tudíž nelze získat vůbec žádné
+goal pro zobrazení konfigurace ani neobsahuje, tudíž nelze získat žádné
 informace. Nástroj JRAPIDoc oproti ostatním při spuštění zobrazí očekávanou
 nápovědu konfigurace.
 
 Při srovnání samotné konfigurace se jako nejobtížnější jeví ta ve Swaggeru.
 Miredot a JRAPIDoc mají konfiguraci stručnou a snadno pochopitelnou. Swagger
 umožňuje integrovat dva různé GUI klienty, kde každý je v pom.xml konfigurován
-pomocí jiných elementů. To působí při prvním kontaktu s nástrojem velmi
-zmatečně, protože například ani nevíme o existenci druhého a pokud konfigurujeme
-jiného než jsme si stáhli, není nám jasné proč konfigurace nebyla aplikována.
+pomocí jiných elementů. Tato skutečnost působí při prvním kontaktu s nástrojem
+velmi zmatečně, a to z toho důvodu, že uživatel například neví o existenci
+druhého GUI klienta a pokud konfiguruje jiného, než si stáhnul, není jasné, proč
+konfigurace nebyla aplikována.
 
 \section{Podpora JAX-RS API}
 
@@ -2690,16 +2735,16 @@ Nástroj Swagger po úspěšné konfiguraci a následném pokusu o vygenerován�
 dokumentace nic nevygeneruje. Swagger tvoří model jen u tříd a metod, které jsou
 anotovány jeho přídavnými anotacemi. U tříd a metod je vždy nutné duplikovat
 hodnotu z JAX-RS anotace {\em @Path} do anotace Swaggeru. Takové řešení je
-problematické, když není možná úprava zdrojového kódu tříd rozhraní. To může
-nastat, pokud jsou třídy do projektu přidány jako knihovny. S touto vlastností
-Swaggeru je spojena ještě jedna nevýhoda. Tou je nutnost modifikace kódu při
+problematické, pokud není možná úprava zdrojového kódu tříd rozhraní. Tato
+situace může nastat, pokud jsou třídy do projektu přidány jako knihovny. S touto
+vlastností Swaggeru je spojena ještě jedna nevýhoda. Tou je nutnost modifikace kódu při
 změně seznamu dokumentovaných tříd. JRAPIDoc je flexibilnější, po
 nakonfigurování pluginu automaticky vyhledá třídy rozhraní.
 Ty jsou vyhledávány v určených Java balíčcích. Může se stát, že v balíčku jsou i
 třídy, které dokumentovat nechceme. Taková funkčnost je řešena za pomocí
 konfigurace, ve které se vydefinuje seznam tříd k vynechání. Pokud nastane
-situace, kdy v jednom sestavení je nutné vygenerovat více než jednu dokumentaci,
-se Swaggerem se to nepodaří, protože je vždy nutný zásah do zdrojového kódu.
+situace, kdy je nutné v jednom sestavení vygenerovat více než jednu
+dokumentaci, se Swaggerem se to nepodaří, protože je vždy nutný zásah do zdrojového kódu.
 
 \subsection{HTTP parametry}
 
@@ -2743,14 +2788,14 @@ ani jedna ze standardních HTTP metod není vyhovující. Na
 \ref{lst:vlastni-designator} je ukázka, jak lze vytvořit vlastní designator,
 který má úplně stejné zacházení a vlastnosti jako ty zabudované.
 
-\begin{lstlisting}[frame=single, caption={Vlastní request method
+\begin{code}[frame=single, caption={Vlastní request method
 designator},label={lst:vlastni-designator}] 
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @HttpMethod("CUSTOM")
 public @interface CUSTOM {
 }
-\end{lstlisting}
+\end{code}
 
 Narozdíl od Swagger podporuje JRAPIDoc vlastní request method designatory a
 zanese vlastní typ HTTP metody korektně do dokumentace. Swagger po vytvoření a
@@ -2759,9 +2804,9 @@ metody a k rozhraní nezobrazí žádnou dokumentaci.
 
 \subsection{Dědičnost tříd vzdáleného rozhraní}
 
-JAX-RS specifikuje dědičnost tříd, se vzdáleným rozhraním, algoritmem popsaným v
-\ref{subsec:dedicnost-resource-trid}. Swagger tento nevyužívá a dědičnost tříd
-ignoruje. Anotace definované v nadtřídách a rozhraních jsou ignorovány. I přes
+JAX-RS specifikuje dědičnost tříd se vzdáleným rozhraním algoritmem popsaným v
+\ref{subsec:dedicnost-resource-trid}. Swagger tento algoritmus nevyužívá a
+dědičnost tříd ignoruje. Anotace definované v nadtřídách a rozhraních jsou ignorovány. I přes
 přidání Swagger anotací do třídy předka a potomka, metoda v dokumentaci zahrnuta
 není. JRAPIDoc takto definovaný algoritmus pro průchod předky aplikuje při
 introspekci kódu a výsledkem je model dokumentace, který odpovídá navrženému
@@ -2794,7 +2839,7 @@ elementů z anotací {\em @WebParam}, {\em @WebResult} a {\em @OneWay}. Je také
 dokumentováno vyhazování výjimek.
 Na \ref{lst:soap-metoda-jrapidoc-ukazka} je ukázka definice metody.
 
-\begin{lstlisting}[frame=single, caption={SOAP-based webové služby metoda s užitím JRAPIDoc
+\begin{code}[frame=single, caption={SOAP-based webové služby metoda s užitím JRAPIDoc
 anotací}, label={lst:soap-metoda-jrapidoc-ukazka}] 
 @DocDescription("Example operation") 
 @DocReturns({
@@ -2812,11 +2857,11 @@ public Destination foo4b(
   @DocDescription("ID of flight")
   @WebParam(mode = WebParam.Mode.INOUT, header = true) 
   Holder<String> flightId) throws AirserviceFault;
-\end{lstlisting}
+\end{code}
 
 Při tvorbě SOAP-based webové služby pomocí JAX-WS je možné použít anotaci {\em
 @SOAPBinding}, kterou je možné ovlivnit strukturu přenášených zpráv se
-zachováním nosných dat. Je možné buď definovat pro celou službu nebo ke
+zachováním nosných dat. Je možné buď definovat pro celou službu, nebo ke
 konkrétním metodám. JRAPIDoc zanáší tyto informace do dokumentace podle postupů
 popsaných v \ref{subsec:serializace-dat}.
 
@@ -2835,29 +2880,29 @@ List\{empty\}}, zatímco JRAPIDoc uvádí ve své dokumentaci {\em
 array<org.example.TypeA>}, což je správně.
 
 JRAPIDoc podporuje různé type providery, což mu dává flexibilitu při
-dokumentování transportních typů popsanýc \ref{subsec:typovy-system}). Při
+dokumentování transportních typů popsaných v \ref{subsec:typovy-system}). Při
 tvorbě dokumentace se berou v potaz anotace zanesené v třídách z analyzovaných
 typů. Tyto anotace mohou být z knihovny Jackson a JAXB. Pomocí konfigurace lze
 nastavit, které anotace aplikovat. Existuje i možnost přidat vlastního type
 providera, který bude nahrazen za zabudované a tvořit tak transportní typy jiným
 způsobem.
-U Swagger se nepodařilo zjistit, zda má podobnou funkčnost jako JRAPIDoc, ale
-defaultně aplikuje anotace jak Jackson tak i JAXB současně.
+U Swaggeru se nepodařilo zjistit, zda má podobnou funkčnost jako JRAPIDoc, ale
+defaultně aplikuje anotace jak Jackson, tak i JAXB současně.
 
 \section{Rozšiřitelnost}
 
 Kromě nahrazení type providera za vlastního poskytuje nástroj rozhraní pro
 tvorbu vlastních operací nad modelem dokumentace. Tyto operace mohou model číst
-i modifikovat před tím než bude vygenerován do souboru. Podrobné možnosti o
+i modifikovat před tím, než bude vygenerován do souboru. Podrobné možnosti o
 rozšíření lze nalézt v \ref{subsec:rozsirujici-operace-nad-modelem}.
 
 Pro vytvoření operace stačí implementovat rozhraní {\em ModelHandler} a
-zaregistrovat operaci. Zaregistrování se děje zanesením konfigurace v pom.xml k
-pluginu. Na \ref{lst:operace-nad-modelem} je ukázka operace nad modelem, která
+zaregistrovat operaci. Zaregistrování je realizováno zanesením konfigurace v
+pom.xml k pluginu. Na \ref{lst:operace-nad-modelem} je ukázka operace nad modelem, která
 kontroluje zda všechny metody v rozhraní mají vyplněn popis. Registrace operace
 je znázorněna na \ref{lst:registrovani-handleru}.
 
-\begin{lstlisting}[frame=single, caption={Ukázka použití operace nad modelem},
+\begin{code}[frame=single, caption={Ukázka použití operace nad modelem},
 basicstyle=\small, label={lst:operace-nad-modelem}] 
 public class CheckRestMethodDescriptionHandler implements ModelHandler {
   @Override
@@ -2874,25 +2919,26 @@ public class CheckRestMethodDescriptionHandler implements ModelHandler {
     }
   }
 }
-\end{lstlisting}
+\end{code}
 
-\begin{lstlisting}[frame=single, caption={Registrování handleru pro model},
+\begin{code}[frame=single, caption={Registrování handleru pro model},
 label={lst:registrovani-handleru}] 
 <modelHandlers>
     <modelHandler>
         org.example.CheckRestMethodDescriptionHandler
     </modelHandler>
 </modelHandlers>
-\end{lstlisting}
+\end{code}
 
 \chapter{Budoucí práce}
 
-Bylo by možné přidat volitelně generování modelu do jiných formátů než je JSON a
-do jiných specifikací modelu než používá nástroj defaultně. Například by mohlo
-jít o podporu serializace stávající struktury modelu do XML formátu či podporu
-transformace a vygenerování modelu do WADL. Jelikož nástroj poskytuje rozhraní
-pro přidání rozšiřujících operací, nebyla by nutná změna v kódu nástroje, ale
-stačilo by pouze implementovat a přidat operaci do konfigurace pluginu.
+Tato kapitola obsahuje návrhy, jak je možné nástroj v budoucnu rozšířit.
+První možností je přidat volitelně generování modelu do jiných
+formátů, než je JSON a do jiných specifikací modelu, než používá nástroj
+defaultně. Například by mohlo jít o podporu serializace stávající struktury
+modelu do XML formátu či podporu transformace a vygenerování modelu do WADL.
+Jelikož nástroj poskytuje rozhraní pro přidání rozšiřujících operací, nebyla by
+nutná změna v kódu nástroje, ale stačilo by pouze implementovat a přidat operaci do konfigurace pluginu.
 
 Následujícím možným rozšířením by mohla být podpora dalších technologií
 umožňujících vzdálenou komunikaci v Javě EE. Vedle podpory RESTful webových
@@ -2920,14 +2966,14 @@ provedení minimální konfigurace. Pro kvalitnější a podrobnější dokument
 možné do kódu se vzdáleným rozhraním doplnit pomocné
  prvky ve formě Java anotací. Ty byly vytvořeny jako volitelný doplněk k Maven
  pluginům. V kontrastu popsaném v \ref{ch:vysledky-a-srovnani} vyplývá, že
- nástroj JRAPIDoc dokáže vytvořit dokumentaci ke vzdálenému rozhraní aniž by se
+ nástroj JRAPIDoc dokáže vytvořit dokumentaci ke vzdálenému rozhraní, aniž by se
  musely provádět změny v kódu. V tomto ohledu tak předčí nástroj Swagger. Ten
  téměř nepodporuje specifikaci JAX-RS a je nutné návrh rozhraní přizpůsobovat
  Swaggeru.
  
 Po závěrečné fázi realizace byly na nástroji provedeny integrační a uživatelské
 testy.
-Výsledky z těchto testů byly zanalyzovány a byly zakomponovány do nástroje.
+Výsledky těchto testů byly zanalyzovány a zakomponovány do nástroje.
 
 Pro spuštění nástroje je vyžadována jen nejnutnější konfigurace, poté je možné
 okamžitě generovat dokumentaci. Pluginy nástroje lze spouštět samostatně mimo
